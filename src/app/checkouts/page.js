@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 export default function Checkout() {
   const [cart, setCart] = useState([]);
@@ -369,7 +370,7 @@ export default function Checkout() {
                 key={item.id}
                 className="flex items-center mb-4 border-b pb-3"
               >
-                <img
+                <Image
                   src={`http://127.0.0.1:8000/storage/${item.image}`}
                   alt={item.name}
                   className="w-16 h-16 object-cover rounded mr-4"

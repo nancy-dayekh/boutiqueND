@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react"; // ✅ added useCallback
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function ShoppingCart() {
   const router = useRouter();
@@ -17,11 +18,11 @@ export default function ShoppingCart() {
   useEffect(() => {
     setIsClient(true);
 
-    const storedToken = localStorage.getItem("auth_token"); // ✅ get token
+    const storedToken = localStorage.getItem("auth_token");
     if (storedToken) {
       setIsLoggedIn(true);
       setToken(storedToken);
-      fetchCartFromBackend(storedToken); // ✅ pass it here
+      fetchCartFromBackend(storedToken);
     } else {
       const localCart = JSON.parse(localStorage.getItem("cart")) || [];
       setCart(
@@ -43,21 +44,19 @@ export default function ShoppingCart() {
     try {
       const res = await fetch("http://127.0.0.1:8000/api/customer/cart", {
         headers: {
-          Authorization: `Bearer ${userToken}`, // ✅ fixed here
+          Authorization: `Bearer ${userToken}`,
           Accept: "application/json",
         },
       });
 
       const data = await res.json();
-      console.log("Fetched cart data:", data);
-
       const backendCart = data.cart_items.map((item) => ({
         id: item.product.id,
         name: item.product.name,
         image: item.product.image,
         price: parseFloat(item.product.price),
         quantity: item.quantity,
-        size: item.size || "", // ✅ Fix: from cart item, not product
+        size: item.size || "",
         cart_id: item.id,
       }));
 
@@ -67,7 +66,7 @@ export default function ShoppingCart() {
     }
   };
 
-  const fetchQuantities = async () => {
+  const fetchQuantities = useCallback(async () => {
     const newQuantities = {};
     await Promise.all(
       cart.map(async (item) => {
@@ -83,13 +82,13 @@ export default function ShoppingCart() {
       })
     );
     setQuantities(newQuantities);
-  };
+  }, [cart]);
 
   useEffect(() => {
     if (cart.length > 0 && isClient) {
       fetchQuantities();
     }
-  }, [cart, isClient]);
+  }, [cart, isClient, fetchQuantities]);
 
   const handleBackToShop = () => router.push("/products");
   const handleCheckouts = () => router.push("/checkouts");
@@ -158,10 +157,12 @@ export default function ShoppingCart() {
                   key={isLoggedIn ? item.cart_id : item.id}
                   className="flex flex-col sm:flex-row items-center sm:items-start border-b border-gray-200 pb-5"
                 >
-                  <img
+                  <Image
                     src={`http://127.0.0.1:8000/storage/${item.image}`}
                     alt={item.name}
-                    className="w-24 h-24 sm:w-32 sm:h-28 rounded-lg object-cover shadow-sm"
+                    width={128}
+                    height={128}
+                    className="rounded-lg object-cover shadow-sm"
                   />
                   <div className="flex flex-col sm:ml-6 flex-1 w-full mt-4 sm:mt-0">
                     <h2 className="text-lg font-semibold text-gray-900 line-clamp-2">

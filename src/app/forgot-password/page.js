@@ -46,7 +46,8 @@ export default function ForgotPassword() {
         setMessage("❌ Something went wrong. Please try again.");
         setIsSuccess(false);
       }
-    } catch (error) {
+    } catch (e) {
+      console.error(e);
       setMessage("❌ Network error. Try again.");
       setIsSuccess(false);
     }

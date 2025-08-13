@@ -60,7 +60,8 @@ export default function HmFilterSortCopy() {
       } else {
         setProducts(Array.isArray(data) ? data : []);
       }
-    } catch (err) {
+    } catch (e) {
+      console.error(e);
       setError("Network error, please try again.");
       setProducts([]);
     } finally {
@@ -69,26 +70,25 @@ export default function HmFilterSortCopy() {
   };
 
   const sizes = ["XS", "S", "M", "L", "XL", "XXL", "XXXL", "XXXXL"];
-const colors = [
-  "Black",
-  "White",
-  "Red",
-  "Blue",
-  "Green",
-  "Yellow",
-  "Pink",
-  "Purple",
-  "Orange",
-  "Brown",
-  "Gray",
-  "Beige",
-  "Turquoise",
-  "Navy",
-  "Gold",
-  "Silver",
-  "Coral",
-];
-
+  const colors = [
+    "Black",
+    "White",
+    "Red",
+    "Blue",
+    "Green",
+    "Yellow",
+    "Pink",
+    "Purple",
+    "Orange",
+    "Brown",
+    "Gray",
+    "Beige",
+    "Turquoise",
+    "Navy",
+    "Gold",
+    "Silver",
+    "Coral",
+  ];
 
   const veilOptions = [
     { label: "With Veil", value: "veil" },

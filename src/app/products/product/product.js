@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import Image from "next/image";
 
 export default function Products({ products = [], searchTerm = "" }) {
   const router = useRouter();
@@ -118,7 +119,7 @@ export default function Products({ products = [], searchTerm = "" }) {
 
               {/* Product Image */}
               <div className="w-full h-[220px] md:h-[300px] overflow-hidden rounded-md">
-                <img
+                <Image
                   src={`${imageBaseURL}${p.image || ""}`}
                   alt={p.name}
                   onError={(e) => {

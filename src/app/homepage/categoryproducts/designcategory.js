@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function DesignCategory() {
   const [categories, setCategories] = useState([]);
@@ -28,7 +29,7 @@ export default function DesignCategory() {
             className="flex flex-col items-center cursor-pointer hover:scale-105 transition-transform duration-300"
           >
             <div className="w-24 h-24 rounded-full overflow-hidden border border-gray-300 shadow">
-              <img
+              <Image
                 src={
                   cat.image
                     ? `${imageBaseURL}${cat.image}` // ✅ Backticks added here

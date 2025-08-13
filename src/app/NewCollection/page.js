@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import Image from "next/image";
 
 const fallbackImage = "/default-product.png";
 
@@ -120,7 +121,7 @@ export default function NewCollection() {
                   onClick={() => handleProductClick(product.id)}
                 >
                   <div className="w-full aspect-[4/5] overflow-hidden md:max-h-[320px]">
-                    <img
+                    <Image
                       src={`${imageBaseURL}${product.image || ""}`}
                       alt={product.name || "product image"}
                       onError={(e) => {

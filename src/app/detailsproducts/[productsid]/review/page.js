@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import Image from "next/image";
 
 export default function Review() {
   const params = useParams();
@@ -181,7 +182,7 @@ export default function Review() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img
+                  <Image
                     src={review.image}
                     alt="Review Image"
                     className="mt-3 w-full max-w-md rounded-lg object-cover cursor-pointer transition hover:opacity-90"

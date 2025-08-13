@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function Login() {
+function LoginForm() {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams(); // ✅ must be first
   const success = searchParams.get("success");
 
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -38,39 +38,31 @@ export default function Login() {
     try {
       const res = await fetch("http://127.0.0.1:8000/api/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        // ✅ Save token in localStorage
         localStorage.setItem("auth_token", data.token);
-
         setShowSuccessDialog(true);
         setTimeout(() => {
           setShowSuccessDialog(false);
           router.push("/");
         }, 2000);
       } else {
-        setErrors({
-          form: data.message || "Invalid credentials.",
-        });
+        setErrors({ form: data.message || "Invalid credentials." });
       }
-    } catch (err) {
+    } catch {
       setErrors({ form: "Network error. Please try again later." });
     } finally {
       setSubmitting(false);
     }
-    
   };
 
   return (
     <main className="min-h-screen flex items-start bg-white pt-20 px-4 ml-0 md:ml-28">
-      {/* ✅ Success Dialog */}
       {showSuccessDialog && (
         <div className="absolute top-5 right-5 bg-green-100 text-green-800 px-4 py-3 rounded shadow-lg animate-fade-in">
           ✅ Login successful! Redirecting...
@@ -92,7 +84,6 @@ export default function Login() {
           <p className="text-sm text-red-600 text-center">{errors.form}</p>
         )}
 
-        {/* Email */}
         <div>
           <input
             type="email"
@@ -109,7 +100,6 @@ export default function Login() {
           )}
         </div>
 
-        {/* Password */}
         <div className="relative">
           <input
             type={showPassword ? "text" : "password"}
@@ -126,18 +116,11 @@ export default function Login() {
             onClick={() => setShowPassword((prev) => !prev)}
             className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
           >
-            {showPassword ? (
-              <EyeSlashIcon className="h-5 w-5" />
-            ) : (
-              <EyeIcon className="h-5 w-5" />
-            )}
+            {showPassword ? <EyeSlashIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
           </button>
-          {errors.password && (
-            <p className="text-xs text-red-600 mt-1">{errors.password}</p>
-          )}
+          {errors.password && <p className="text-xs text-red-600 mt-1">{errors.password}</p>}
         </div>
 
-        {/* Forgot password */}
         <div className="text-right">
           <button
             type="button"
@@ -148,37 +131,34 @@ export default function Login() {
           </button>
         </div>
 
-        {/* Submit */}
         <button
           type="submit"
           disabled={submitting}
           className={`w-full border border-black py-3 text-sm uppercase tracking-wide transition duration-300 ${
-            submitting
-              ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-              : "hover:bg-black hover:text-white"
+            submitting ? "bg-gray-200 text-gray-500 cursor-not-allowed" : "hover:bg-black hover:text-white"
           }`}
         >
           {submitting ? "Logging in..." : "Log In"}
         </button>
       </form>
 
-      {/* ✅ Animation */}
       <style jsx>{`
         .animate-fade-in {
           animation: fadeIn 0.5s ease-in-out;
         }
-
         @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
     </main>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginForm />
+    </Suspense>
   );
 }

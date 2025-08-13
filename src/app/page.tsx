@@ -8,6 +8,8 @@ import ShopDresses from "./homepage/shopdressesdesign/shopdresses";
 import ShopBlazer from "./homepage/shopblazerdesgin/shopblazer";
 import DesignJeans from "./homepage/displayjeans/designjeans";
 import About from "./about/page";
+import Image from "next/image";
+
 const slides = [
   { type: "video", src: "/video/contactuss.mp4" },
   { type: "image", src: "/image/homeslider2.jpg" },
@@ -112,7 +114,7 @@ useEffect(() => {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <img
+                  <Image
                     src={slide.src}
                     alt={`Slide ${idx}`}
                     className="w-full h-full object-cover"

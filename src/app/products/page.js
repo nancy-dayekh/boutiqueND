@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Collection() {
   const [categories, setCategories] = useState([]);
@@ -33,7 +34,7 @@ export default function Collection() {
               className="block w-full sm:w-[300px]"
             >
               <div className="relative overflow-hidden border-4 border-white transition-transform duration-300 hover:scale-105">
-                <img
+                <Image
                   src={
                     cat.image ? `${imageBaseURL}${cat.image}` : "/placeholder.png"
                   }
