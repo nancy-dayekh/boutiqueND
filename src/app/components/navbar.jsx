@@ -77,130 +77,125 @@ export default function Header() {
       <header className="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 shadow-sm h-20 md:h-24">
         <div className="max-w-7xl mx-auto flex items-center justify-between h-full px-5">
           {/* Mobile Header */}
-     <div className="flex items-center md:hidden">
-  {/* Menu button immediately next to logo */}
-  <button onClick={toggleMobileMenu} className="text-black text-2xl p-0">
+        <div className="flex items-center md:hidden w-full h-20 px-5">
+  {/* Menu button */}
+  <button
+    onClick={toggleMobileMenu}
+    className="text-black text-2xl p-0"
+  >
     {mobileOpen ? <FaTimes /> : <FaBars />}
   </button>
 
+  {/* Logo */}
   <Image
     src="/image/logond.png"
     alt="Logo"
     width={100}
     height={40}
     priority
-    className="block"
+    className="block ml-2"
   />
+
+  {/* Icons aligned to end */}
+  <div className="flex items-end gap-4 text-black ml-auto">
+    <Link href={customerName ? "/profile" : "/logon"}>
+      {customerName ? (
+        <span className="font-semibold hover:text-pink-500 cursor-pointer">
+          {customerName}
+        </span>
+      ) : (
+        <FaUser className="hover:text-pink-500 cursor-pointer" />
+      )}
+    </Link>
+    <Link href="/search" className="hover:text-pink-500 transition-colors">
+      <FaSearch className="text-[20px]" />
+    </Link>
+    <Link href="/favorite" className="hover:text-pink-500 transition-colors">
+      <FaHeart className="text-[20px]" />
+    </Link>
+    <Link href="/addtocarts" className="hover:text-pink-500 transition-colors">
+      <FaShoppingCart className="text-[20px]" />
+    </Link>
+  </div>
 </div>
 
+          {/* Desktop Header */}
+          <div className="hidden md:flex justify-between items-center w-full">
+            <div className="flex items-center gap-0">
+              <Image
+                src="/image/logond.png"
+                alt="Logo"
+                width={100}
+                height={40}
+                priority
+                className="block"
+              />
+            </div>
 
-          <div className="flex items-center gap-4 text-black">
-            <Link href={customerName ? "/profile" : "/logon"}>
-              {customerName ? (
-                <span className="font-semibold hover:text-pink-500 cursor-pointer">
-                  {customerName}
-                </span>
-              ) : (
-                <FaUser className="hover:text-pink-500 cursor-pointer" />
+            {/* Search */}
+            <div
+              className="relative w-full max-w-[500px] mx-8"
+              onMouseEnter={() => setSearchDropdownOpen(true)}
+              onMouseLeave={() => setSearchDropdownOpen(false)}
+            >
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="search our store"
+                className="w-full pl-5 pr-12 py-2.5 rounded-full border border-gray-300 outline-none shadow-sm transition-all duration-200"
+                onFocus={() => setSearchDropdownOpen(true)}
+                onBlur={() => setSearchDropdownOpen(false)}
+              />
+              <button
+                onClick={() => {
+                  handleSearch();
+                  setSearchDropdownOpen(false);
+                }}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-pink-500"
+              >
+                <FaSearch className="text-lg" />
+              </button>
+
+              {searchDropdownOpen && (
+                <div className="absolute top-full left-0 mt-2 bg-white/95 shadow-lg rounded-md p-5 grid grid-cols-2 gap-6 min-w-[320px] max-h-[260px] overflow-y-auto z-50">
+                  {categoryItems.length === 0 ? (
+                    <p className="text-gray-500 col-span-2">No categories.</p>
+                  ) : (
+                    categoryItems.map((cat) => (
+                      <Link
+                        key={cat.id}
+                        href={`/products/${cat.name
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")}`}
+                        className="text-gray-800 hover:text-pink-500"
+                        onClick={() => setSearchDropdownOpen(false)}
+                      >
+                        {cat.name}
+                      </Link>
+                    ))
+                  )}
+                </div>
               )}
-            </Link>
-            <Link
-              href="/search"
-              className="hover:text-pink-500 transition-colors"
-            >
-              <FaSearch className="text-[20px]" />
-            </Link>
-            <Link
-              href="/favorite"
-              className="hover:text-pink-500 transition-colors"
-            >
-              <FaHeart className="text-[20px]" />
-            </Link>
-            <Link
-              href="/addtocarts"
-              className="hover:text-pink-500 transition-colors"
-            >
-              <FaShoppingCart className="text-[20px]" />
-            </Link>
-          </div>
-        </div>
+            </div>
 
-        {/* Desktop Header */}
-        <div className="hidden md:flex justify-between items-center w-full">
-          <div className="flex items-center gap-0">
-            <Image
-              src="/image/logond.png"
-              alt="Logo"
-              width={100}
-              height={40}
-              priority
-              className="block"
-            />
-          </div>
-
-          {/* Search */}
-          <div
-            className="relative w-full max-w-[500px] mx-8"
-            onMouseEnter={() => setSearchDropdownOpen(true)}
-            onMouseLeave={() => setSearchDropdownOpen(false)}
-          >
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="search our store"
-              className="w-full pl-5 pr-12 py-2.5 rounded-full border border-gray-300 outline-none shadow-sm transition-all duration-200"
-              onFocus={() => setSearchDropdownOpen(true)}
-              onBlur={() => setSearchDropdownOpen(false)}
-            />
-            <button
-              onClick={() => {
-                handleSearch();
-                setSearchDropdownOpen(false);
-              }}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-pink-500"
-            >
-              <FaSearch className="text-lg" />
-            </button>
-
-            {searchDropdownOpen && (
-              <div className="absolute top-full left-0 mt-2 bg-white/95 shadow-lg rounded-md p-5 grid grid-cols-2 gap-6 min-w-[320px] max-h-[260px] overflow-y-auto z-50">
-                {categoryItems.length === 0 ? (
-                  <p className="text-gray-500 col-span-2">No categories.</p>
+            <div className="flex items-center gap-6 text-black">
+              <Link href={customerName ? "/profile" : "/logon"}>
+                {customerName ? (
+                  <span className="font-semibold hover:text-pink-500 cursor-pointer">
+                    {customerName}
+                  </span>
                 ) : (
-                  categoryItems.map((cat) => (
-                    <Link
-                      key={cat.id}
-                      href={`/products/${cat.name
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")}`}
-                      className="text-gray-800 hover:text-pink-500"
-                      onClick={() => setSearchDropdownOpen(false)}
-                    >
-                      {cat.name}
-                    </Link>
-                  ))
+                  <FaUser className="hover:text-pink-500 cursor-pointer" />
                 )}
-              </div>
-            )}
-          </div>
-
-          <div className="flex items-center gap-6 text-black">
-            <Link href={customerName ? "/profile" : "/logon"}>
-              {customerName ? (
-                <span className="font-semibold hover:text-pink-500 cursor-pointer">
-                  {customerName}
-                </span>
-              ) : (
-                <FaUser className="hover:text-pink-500 cursor-pointer" />
-              )}
-            </Link>
-            <Link href="/favorite">
-              <FaHeart className="hover:text-pink-500" />
-            </Link>
-            <Link href="/addtocarts">
-              <FaShoppingCart className="hover:text-pink-500" />
-            </Link>
+              </Link>
+              <Link href="/favorite">
+                <FaHeart className="hover:text-pink-500" />
+              </Link>
+              <Link href="/addtocarts">
+                <FaShoppingCart className="hover:text-pink-500" />
+              </Link>
+            </div>
           </div>
         </div>
 
