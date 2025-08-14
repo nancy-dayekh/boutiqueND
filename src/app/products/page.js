@@ -33,13 +33,16 @@ export default function Collection() {
               href={`/products/${encodeURIComponent(cat.name)}`}
               className="block w-full sm:w-[300px]"
             >
-              <div className="relative overflow-hidden border-4 border-white transition-transform duration-300 hover:scale-105">
+              <div className="relative w-full h-[180px] sm:h-[400px] overflow-hidden border-4 border-white transition-transform duration-300 hover:scale-105">
                 <Image
                   src={
-                    cat.image ? `${imageBaseURL}${cat.image}` : "/placeholder.png"
+                    cat.image
+                      ? `${imageBaseURL}${cat.image}`
+                      : "/placeholder.png"
                   }
                   alt={cat.name}
-                  className="w-full h-[180px] sm:h-[400px] object-cover"
+                  fill
+                  className="object-cover"
                 />
                 <div className="absolute bottom-0 left-0 w-full bg-white/90 py-3 text-center">
                   <p className="text-black text-sm font-medium tracking-wide uppercase">

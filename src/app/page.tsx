@@ -47,12 +47,12 @@ export default function Homepage() {
       window.removeEventListener("scroll", handleScrollAnimation);
     };
   }, []);
-useEffect(() => {
-  if (!sessionStorage.getItem("hasRefreshed")) {
-    sessionStorage.setItem("hasRefreshed", "true");
-    window.location.reload();
-  }
-}, []);
+  useEffect(() => {
+    if (!sessionStorage.getItem("hasRefreshed")) {
+      sessionStorage.setItem("hasRefreshed", "true");
+      window.location.reload();
+    }
+  }, []);
 
   useEffect(() => {
     timeoutRef.current = setTimeout(() => {
@@ -117,7 +117,9 @@ useEffect(() => {
                   <Image
                     src={slide.src}
                     alt={`Slide ${idx}`}
-                    className="w-full h-full object-cover"
+                    width={1920} // your desired width
+                    height={1080} // your desired height
+                    className="object-cover w-full h-full"
                   />
                 )}
               </div>

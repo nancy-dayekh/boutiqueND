@@ -26,7 +26,9 @@ export default function NewCollection() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await fetch("http://127.0.0.1:8000/api/productsNewcollection");
+        const res = await fetch(
+          "http://127.0.0.1:8000/api/productsNewcollection"
+        );
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
         setProducts(data);
@@ -81,7 +83,9 @@ export default function NewCollection() {
   }
 
   if (totalProducts === 0) {
-    return <p className="text-center py-20 text-gray-500">No products found.</p>;
+    return (
+      <p className="text-center py-20 text-gray-500">No products found.</p>
+    );
   }
 
   return (
@@ -110,7 +114,9 @@ export default function NewCollection() {
 
         {/* Product Grid */}
         <div
-          className={`grid ${isMobile ? "grid-cols-2" : "grid-cols-3"} grid-rows-2 gap-4`}
+          className={`grid ${
+            isMobile ? "grid-cols-2" : "grid-cols-3"
+          } grid-rows-2 gap-4`}
         >
           {displayedProducts.map(
             (product) =>
@@ -120,15 +126,16 @@ export default function NewCollection() {
                   className="group relative cursor-pointer overflow-hidden rounded-md shadow-md"
                   onClick={() => handleProductClick(product.id)}
                 >
-                  <div className="w-full aspect-[4/5] overflow-hidden md:max-h-[320px]">
+                  <div className="relative w-full h-[300px] sm:h-[250px] overflow-hidden rounded-lg">
                     <Image
                       src={`${imageBaseURL}${product.image || ""}`}
                       alt={product.name || "product image"}
+                      fill
                       onError={(e) => {
                         e.currentTarget.onerror = null;
                         e.currentTarget.src = fallbackImage;
                       }}
-                      className="w-full h-full object-cover transition-transform duration-300 transform group-hover:scale-105"
+                      className="object-cover transition-transform duration-300 transform group-hover:scale-105"
                     />
                   </div>
 
@@ -136,7 +143,9 @@ export default function NewCollection() {
                     <h3 className="text-white font-semibold text-base">
                       {product.name}
                     </h3>
-                    <p className="text-white font-light mt-0.5">${product.price}</p>
+                    <p className="text-white font-light mt-0.5">
+                      ${product.price}
+                    </p>
                   </div>
                 </div>
               )

@@ -117,16 +117,16 @@ export default function Products({ products = [], searchTerm = "" }) {
                 )}
               </div>
 
-              {/* Product Image */}
-              <div className="w-full h-[220px] md:h-[300px] overflow-hidden rounded-md">
+              <div className="relative w-full h-[220px] md:h-[300px] overflow-hidden rounded-md">
                 <Image
                   src={`${imageBaseURL}${p.image || ""}`}
-                  alt={p.name}
+                  alt={p.name || "product image"}
+                  fill
                   onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = fallbackImage;
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = fallbackImage;
                   }}
-                  className="w-full h-full object-cover transition-transform duration-300 transform group-hover:scale-105"
+                  className="object-cover transition-transform duration-300 transform group-hover:scale-105"
                 />
               </div>
 
