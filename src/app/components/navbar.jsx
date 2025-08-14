@@ -280,7 +280,7 @@ export default function Header() {
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between px-5 h-20 border-b">
-            <h1 className="text-lg font-semibold">Menu</h1>
+            <h1 className="text-[17px] font-bold text-black">Menu</h1>
             <button onClick={toggleMobileMenu} className="text-2xl text-black">
               <FaTimes />
             </button>
