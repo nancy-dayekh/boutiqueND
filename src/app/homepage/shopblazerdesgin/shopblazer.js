@@ -8,18 +8,18 @@ export default function Shopbresses() {
   const handleCheckouts = () => router.push("/products/blazer");
 
   return (
-    <div className="w-full bg-white px-[2px] md:px-[2px] py-2"> {/* white bg and 2px spacing */}
+    <div className="w-full bg-white px-[2px] md:px-[2px] py-2"> {/* white bg + 2px left/right */}
       <div className="relative w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden shadow-lg">
         {/* Full Image */}
         <Image
           src="/image/shopblazer.jpg"
           alt="Blazer"
           fill
-          className="object-cover" // full cover without black bars
+          className="object-cover"
           priority
         />
 
-        {/* Gradient overlay for readability */}
+        {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/10" />
 
         {/* Text content */}
