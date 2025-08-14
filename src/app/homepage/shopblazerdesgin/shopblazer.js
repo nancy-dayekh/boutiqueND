@@ -8,22 +8,22 @@ export default function Shopbresses() {
   const handleCheckouts = () => router.push("/products/blazer");
 
   return (
-    <div className="w-full px-4 md:px-10">
-      <div className="relative w-full h-[400px] md:h-[500px] bg-black rounded-xl overflow-hidden shadow-lg">
+    <div className="w-full bg-white px-[2px] md:px-[2px] py-2"> {/* white bg and 2px spacing */}
+      <div className="relative w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden shadow-lg">
         {/* Full Image */}
         <Image
           src="/image/shopblazer.jpg"
           alt="Blazer"
           fill
-          className="object-contain"
+          className="object-cover" // full cover without black bars
           priority
         />
 
-        {/* Gradient overlay for better readability */}
+        {/* Gradient overlay for readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/10" />
 
-        {/* Text content - aligned LEFT now */}
-        <div className="absolute inset-0 flex items-center justify-start px-4 md:px-24">
+        {/* Text content */}
+        <div className="absolute inset-0 flex items-center justify-start px-2 md:px-6">
           <div className="text-white text-left max-w-xl space-y-4 bg-black/40 p-4 rounded-lg backdrop-blur-sm">
             <p className="uppercase text-xs md:text-sm tracking-widest">
               Made for Modern Women
