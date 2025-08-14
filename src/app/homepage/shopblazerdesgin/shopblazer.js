@@ -8,7 +8,7 @@ export default function Shopbresses() {
   const handleCheckouts = () => router.push("/products/blazer");
 
   return (
-    <div className="w-full bg-white px-[10px] md:px-[10px] py-2"> {/* white bg + 2px left/right */}
+    <div className="w-full bg-white px-[70px] md:px-[70px] py-2"> {/* white bg + 2px left/right */}
       <div className="relative w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden shadow-lg">
         {/* Full Image */}
         <Image
