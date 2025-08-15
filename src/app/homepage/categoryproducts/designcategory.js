@@ -6,10 +6,10 @@ import Image from "next/image";
 
 export default function DesignCategory() {
   const [categories, setCategories] = useState([]);
-  const imageBaseURL = "https://ae99d3c2de0a.ngrok-free.app/storage/";
+  const imageBaseURL = "http://127.0.0.1:8000/storage/";
 
   useEffect(() => {
-    fetch("https://ae99d3c2de0a.ngrok-free.app/api/categories")
+    fetch("http://127.0.0.1:8000/api/categories")
       .then((res) => res.json())
       .then((data) => {
         if (data.success && data.data) {

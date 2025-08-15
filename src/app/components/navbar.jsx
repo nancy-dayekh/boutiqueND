@@ -25,10 +25,11 @@ export default function Header() {
   useEffect(() => {
     const token = localStorage.getItem("auth_token");
     if (token) {
-      fetch("https://ae99d3c2de0a.ngrok-free.app/api/customer/me", {
+      fetch("https://https://c77959a0fc0a.ngrok-free.app//api/customer/me", {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: "application/json",
+          "ngrok-skip-browser-warning": "true",
         },
       })
         .then((res) => res.json())
@@ -46,11 +47,19 @@ export default function Header() {
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
   }, [mobileOpen]);
-
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("https://ae99d3c2de0a.ngrok-free.app/api/categories");
+        const response = await fetch(
+          "https://c77959a0fc0a.ngrok-free.app/api/categories",
+          {
+            headers: {
+              Accept: "application/json",
+              "ngrok-skip-browser-warning": "true",
+            },
+          }
+        );
+
         const data = await response.json();
         if (data.success && data.data) {
           setCategoryItems(data.data);
@@ -59,6 +68,7 @@ export default function Header() {
         console.error("Error fetching categories:", error);
       }
     };
+
     fetchCategories();
   }, []);
 
@@ -77,47 +87,56 @@ export default function Header() {
       <header className="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 shadow-sm h-20 md:h-24">
         <div className="max-w-7xl mx-auto flex items-center justify-between h-full px-5">
           {/* Mobile Header */}
-        <div className="flex items-center md:hidden w-full h-20 px-5">
-  {/* Menu button */}
-  <button
-    onClick={toggleMobileMenu}
-    className="text-black text-2xl p-0"
-  >
-    {mobileOpen ? <FaTimes /> : <FaBars />}
-  </button>
+          <div className="flex items-center md:hidden w-full h-20 px-5">
+            {/* Menu button */}
+            <button
+              onClick={toggleMobileMenu}
+              className="text-black text-2xl p-0"
+            >
+              {mobileOpen ? <FaTimes /> : <FaBars />}
+            </button>
 
-  {/* Logo */}
-  <Image
-    src="/image/logond.png"
-    alt="Logo"
-    width={100}
-    height={40}
-    priority
-    className="block ml-2"
-  />
+            {/* Logo */}
+            <Image
+              src="/image/logond.png"
+              alt="Logo"
+              width={100}
+              height={40}
+              priority
+              className="block ml-2"
+            />
 
-  {/* Icons aligned to end */}
-  <div className="flex items-end gap-4 text-black ml-auto">
-    <Link href={customerName ? "/profile" : "/logon"}>
-      {customerName ? (
-        <span className="font-semibold hover:text-pink-500 cursor-pointer">
-          {customerName}
-        </span>
-      ) : (
-        <FaUser className="hover:text-pink-500 cursor-pointer" />
-      )}
-    </Link>
-    <Link href="/search" className="hover:text-pink-500 transition-colors">
-      <FaSearch className="text-[20px]" />
-    </Link>
-    <Link href="/favorite" className="hover:text-pink-500 transition-colors">
-      <FaHeart className="text-[20px]" />
-    </Link>
-    <Link href="/addtocarts" className="hover:text-pink-500 transition-colors">
-      <FaShoppingCart className="text-[20px]" />
-    </Link>
-  </div>
-</div>
+            {/* Icons aligned to end */}
+            <div className="flex items-end gap-4 text-black ml-auto">
+              <Link href={customerName ? "/profile" : "/logon"}>
+                {customerName ? (
+                  <span className="font-semibold hover:text-pink-500 cursor-pointer">
+                    {customerName}
+                  </span>
+                ) : (
+                  <FaUser className="hover:text-pink-500 cursor-pointer" />
+                )}
+              </Link>
+              <Link
+                href="/search"
+                className="hover:text-pink-500 transition-colors"
+              >
+                <FaSearch className="text-[20px]" />
+              </Link>
+              <Link
+                href="/favorite"
+                className="hover:text-pink-500 transition-colors"
+              >
+                <FaHeart className="text-[20px]" />
+              </Link>
+              <Link
+                href="/addtocarts"
+                className="hover:text-pink-500 transition-colors"
+              >
+                <FaShoppingCart className="text-[20px]" />
+              </Link>
+            </div>
+          </div>
 
           {/* Desktop Header */}
           <div className="hidden md:flex justify-between items-center w-full">
