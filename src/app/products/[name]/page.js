@@ -96,7 +96,7 @@ export default function HmFilterSortCopy() {
   ];
 
   return (
-    <div className="max-w-[1440px] mx-auto px-4 pt-24 pb-10 font-sans">
+    <div className="max-w-[1440px] mx-auto px-4 pt-6 pb-10 font-sans">
       {/* Filter + Sort Bar */}
       <div className="flex justify-between items-center mb-4 sticky top-20 bg-white z-30 py-3 px-4">
         {/* Filter Button */}
