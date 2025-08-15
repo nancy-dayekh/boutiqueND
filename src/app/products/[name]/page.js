@@ -112,7 +112,7 @@ export default function HmFilterSortCopy() {
         <select
           value={sortPrice}
           onChange={(e) => setSortPrice(e.target.value)}
-          className="border border-black px-3 py-2 text-sm bg-white focus:outline-none min-w-[150px]"
+          className="border border-black px-3 py-2 text-sm uppercase hover:bg-black hover:text-white transition min-w-[100px]"
         >
           <option value="">Sort by</option>
           <option value="asc">Price: Low to High</option>
