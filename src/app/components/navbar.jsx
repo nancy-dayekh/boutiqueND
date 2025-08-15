@@ -77,47 +77,56 @@ export default function Header() {
       <header className="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 shadow-sm h-20 md:h-24">
         <div className="max-w-7xl mx-auto flex items-center justify-between h-full px-5">
           {/* Mobile Header */}
-        <div className="flex items-center md:hidden w-full h-20 px-5">
-  {/* Menu button */}
-  <button
-    onClick={toggleMobileMenu}
-    className="text-black text-2xl p-0"
-  >
-    {mobileOpen ? <FaTimes /> : <FaBars />}
-  </button>
+          <div className="flex items-center md:hidden w-full h-20 px-5">
+            {/* Menu button */}
+            <button
+              onClick={toggleMobileMenu}
+              className="text-black text-2xl p-0"
+            >
+              {mobileOpen ? <FaTimes /> : <FaBars />}
+            </button>
 
-  {/* Logo */}
-  <Image
-    src="/image/logond.png"
-    alt="Logo"
-    width={100}
-    height={40}
-    priority
-    className="block ml-2"
-  />
+            {/* Logo */}
+            <Image
+              src="/image/logond.png"
+              alt="Logo"
+              width={100}
+              height={40}
+              priority
+              className="block ml-2"
+            />
 
-  {/* Icons aligned to end */}
-  <div className="flex items-end gap-4 text-black ml-auto">
-    <Link href={customerName ? "/profile" : "/logon"}>
-      {customerName ? (
-        <span className="font-semibold hover:text-pink-500 cursor-pointer">
-          {customerName}
-        </span>
-      ) : (
-        <FaUser className="hover:text-pink-500 cursor-pointer" />
-      )}
-    </Link>
-    <Link href="/search" className="hover:text-pink-500 transition-colors">
-      <FaSearch className="text-[20px]" />
-    </Link>
-    <Link href="/favorite" className="hover:text-pink-500 transition-colors">
-      <FaHeart className="text-[20px]" />
-    </Link>
-    <Link href="/addtocarts" className="hover:text-pink-500 transition-colors">
-      <FaShoppingCart className="text-[20px]" />
-    </Link>
-  </div>
-</div>
+            {/* Icons aligned to end */}
+            <div className="flex items-end gap-4 text-black ml-auto">
+              <Link href={customerName ? "/profile" : "/logon"}>
+                {customerName ? (
+                  <span className="font-semibold hover:text-pink-500 cursor-pointer">
+                    {customerName}
+                  </span>
+                ) : (
+                  <FaUser className="hover:text-pink-500 cursor-pointer" />
+                )}
+              </Link>
+              <Link
+                href="/search"
+                className="hover:text-pink-500 transition-colors"
+              >
+                <FaSearch className="text-[20px]" />
+              </Link>
+              <Link
+                href="/favorite"
+                className="hover:text-pink-500 transition-colors"
+              >
+                <FaHeart className="text-[20px]" />
+              </Link>
+              <Link
+                href="/addtocarts"
+                className="hover:text-pink-500 transition-colors"
+              >
+                <FaShoppingCart className="text-[20px]" />
+              </Link>
+            </div>
+          </div>
 
           {/* Desktop Header */}
           <div className="hidden md:flex justify-between items-center w-full">

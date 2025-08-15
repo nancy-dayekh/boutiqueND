@@ -370,11 +370,16 @@ export default function Checkout() {
                 key={item.id}
                 className="flex items-center mb-4 border-b pb-3"
               >
-                <Image
-                  src={`http://127.0.0.1:8000/storage/${item.image}`}
-                  alt={item.name}
-                  className="w-16 h-16 object-cover rounded mr-4"
-                />
+       <div className="w-16 h-16 relative">
+  <Image
+    src={`http://127.0.0.1:8000/storage/${item.image}`}
+    alt={item.name}
+    fill
+    className="object-cover rounded"
+  />
+</div>
+
+
                 <div className="flex justify-between w-full">
                   <p className="text-sm font-medium">{item.name}</p>
                   <p className="text-sm font-bold">
