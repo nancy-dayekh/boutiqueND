@@ -46,21 +46,27 @@ export default function Header() {
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
   }, [mobileOpen]);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch("https://ae99d3c2de0a.ngrok-free.app/api/categories");
-        const data = await response.json();
-        if (data.success && data.data) {
-          setCategoryItems(data.data);
+useEffect(() => {
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch(
+        "https://ae99d3c2de0a.ngrok-free.app/api/categories",
+        {
+          headers: { Accept: "application/json" },
+          credentials: "include", // لو تحتاج auth
         }
-      } catch (error) {
-        console.error("Error fetching categories:", error);
+      );
+      const data = await response.json();
+      if (data.success && data.data) {
+        setCategoryItems(data.data);
       }
-    };
-    fetchCategories();
-  }, []);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+  fetchCategories();
+}, []);
+
 
   const toggleMobileMenu = () => setMobileOpen(!mobileOpen);
   const toggleProductsDropdown = () => setProductsDropdownOpen((prev) => !prev);
