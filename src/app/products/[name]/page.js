@@ -98,28 +98,27 @@ export default function HmFilterSortCopy() {
   return (
     <div className="max-w-[1440px] mx-auto px-4 pt-6 pb-10 font-sans">
       {/* Filter + Sort Bar */}
- <div className="w-full flex justify-between items-center mb-4 sticky top-20 bg-white z-30 py-2 px-4">
-  {/* Filter Button */}
-  <button
-    onClick={() => setFilterOpen(true)}
-    className="flex items-center gap-2 border border-gray-300 rounded-md px-4 py-2 text-sm font-medium text-gray-800 bg-white shadow-sm hover:bg-gray-100 active:bg-gray-200 transition"
-  >
-    <FaFilter className="text-gray-500" />
-    Filter
-  </button>
+      <div className="w-full flex justify-between items-center mb-4 sticky top-20 bg-white z-30 py-2 px-4">
+        {/* Filter Button */}
+        <button
+          onClick={() => setFilterOpen(true)}
+          className="flex items-center gap-2 border border-gray-300 rounded-md px-4 py-2 text-sm font-medium text-gray-800 bg-white shadow-sm hover:bg-gray-100 active:bg-gray-200 transition"
+        >
+          <FaFilter className="text-gray-500" />
+          Filter
+        </button>
 
-  {/* Sort Select */}
-  <select
-    value={sortPrice}
-    onChange={(e) => setSortPrice(e.target.value)}
-    className="border border-gray-300 rounded-md px-4 py-2 text-sm font-medium text-gray-800 bg-white shadow-sm hover:bg-gray-100 active:bg-gray-200 transition appearance-none"
-  >
-    <option value="">Sort by</option>
-    <option value="asc">Price: Low to High</option>
-    <option value="desc">Price: High to Low</option>
-  </select>
-</div>
-
+        {/* Sort Select */}
+        <select
+          value={sortPrice}
+          onChange={(e) => setSortPrice(e.target.value)}
+          className="border border-gray-300 rounded-md px-4 py-2 text-sm font-medium text-gray-800 bg-white shadow-sm hover:bg-gray-100 active:bg-gray-200 transition appearance-none"
+        >
+          <option value="">Sort by</option>
+          <option value="asc">Price: Low to High</option>
+          <option value="desc">Price: High to Low</option>
+        </select>
+      </div>
 
       {/* Loading, Error & No Results */}
       {loading && (
