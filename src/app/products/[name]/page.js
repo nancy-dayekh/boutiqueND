@@ -98,27 +98,27 @@ export default function HmFilterSortCopy() {
   return (
     <div className="max-w-[1440px] mx-auto px-4 pt-6 pb-10 font-sans">
       {/* Filter + Sort Bar */}
-      <div className="flex justify-between items-center mb-4 sticky top-20 bg-white z-30 py-3 px-4">
-        {/* Filter Button */}
-        <button
-          onClick={() => setFilterOpen(true)}
-          className="flex items-center gap-2 border border-black px-3 py-2 text-sm uppercase hover:bg-black hover:text-white transition min-w-[100px]"
-        >
-          <FaFilter />
-          Filter
-        </button>
+      <div className="w-full flex justify-between items-center mb-4 sticky top-20 bg-white z-30 py-3 px-4">
+  {/* Filter Button */}
+  <button
+    onClick={() => setFilterOpen(true)}
+    className="flex items-center gap-2 border border-black px-3 py-2 text-sm uppercase hover:bg-black hover:text-white transition min-w-[100px]"
+  >
+    <FaFilter />
+    Filter
+  </button>
 
-        {/* Sort Select */}
-        <select
-          value={sortPrice}
-          onChange={(e) => setSortPrice(e.target.value)}
-          className="border border-black px-3 py-2 text-sm uppercase hover:bg-black hover:text-white transition min-w-[100px]"
-        >
-          <option value="">Sort by</option>
-          <option value="asc">Price: Low to High</option>
-          <option value="desc">Price: High to Low</option>
-        </select>
-      </div>
+  {/* Sort Select */}
+  <select
+    value={sortPrice}
+    onChange={(e) => setSortPrice(e.target.value)}
+    className="border border-black px-3 py-2 text-sm uppercase hover:bg-black hover:text-white transition min-w-[150px]"
+  >
+    <option value="">Sort by</option>
+    <option value="asc">Price: Low to High</option>
+    <option value="desc">Price: High to Low</option>
+  </select>
+</div>
 
       {/* Loading, Error & No Results */}
       {loading && (
