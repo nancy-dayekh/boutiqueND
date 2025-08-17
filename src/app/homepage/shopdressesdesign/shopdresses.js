@@ -8,7 +8,7 @@ export default function Shopdresses() {
   const handleCheckouts = () => router.push("/products/dresses");
 
   return (
-    <div className="w-full bg-white px-[25px] md:px-[25px] py-2"> {/* white bg + 2px spacing left/right */}
+    <div className="w-full bg-white px-5 md:px-5 py-2">
       <div className="relative w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden shadow-lg flex items-center justify-center">
         {/* Full Image, fully visible */}
         <Image

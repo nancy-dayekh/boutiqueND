@@ -17,13 +17,14 @@ export default function DesignJeangs() {
   return (
     <>
       {/* Header */}
-      <div className="w-full flex flex-col mb-10 px-4 sm:px-0 md:ml-20">
-        <div className="flex w-full max-w-6xl gap-4 sm:gap-8">
-          <h1 className="text-base sm:text-xl font-medium tracking-widest uppercase text-black whitespace-nowrap">
-            Versatile Pants Collection
-          </h1>
-        </div>
-      </div>
+  <div className="w-full flex flex-col mb-10 px-5 sm:px-0 md:ml-20">
+  <div className="flex w-full max-w-6xl gap-2 sm:gap-4">
+    <h1 className="text-sm sm:text-base font-medium tracking-wide uppercase text-black whitespace-nowrap">
+      Versatile Pants Collection
+    </h1>
+  </div>
+</div>
+
 
       {/* Products Section */}
       <div className="flex justify-center items-center mb-28">

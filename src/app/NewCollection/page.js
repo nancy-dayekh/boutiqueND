@@ -89,7 +89,7 @@ export default function NewCollection() {
   }
 
   return (
-    <section className="max-w-6xl mx-auto px-2 py-10 mt-[30px] mb-[80px]">
+    <section className="max-w-6xl mx-auto px-5 py-10 mt-[30px] mb-[80px]">
       {/* Title */}
       <div className="w-full flex items-center justify-center mt-[15px] mb-[48px] px-0">
         <div className="flex items-center w-full max-w-6xl gap-4">
