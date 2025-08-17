@@ -83,18 +83,19 @@ export default function Homepage() {
   return (
     <>
       {/* --- Slider Section --- */}
-      {/* --- Slider Section --- */}
       <div
         className="
     relative 
     w-full 
-    h-[400px]         /* bigger height by default (mobile) */
-    sm:h-[330px]      /* smaller height on sm and up */
+    mt-[20px] sm:mt-[40px]   /* ✅ margin top space */
+    h-[300px]                /* smaller height for mobile */
+    sm:h-[400px]             /* bigger for desktop */
     overflow-hidden 
     group
   "
       >
-        <div className="px-0 sm:px-[40px]">
+        {/* ✅ Keep space left/right on all screens */}
+        <div className="mt-5 md:mt-3">
           <div
             className="flex gap-[20px] transition-transform duration-700 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -102,7 +103,7 @@ export default function Homepage() {
             {slides.map((slide, idx) => (
               <div
                 key={idx}
-                className="flex-shrink-0 w-full h-[400px] sm:h-[330px] rounded-[10px] overflow-hidden"
+                className="flex-shrink-0 w-full h-[300px] sm:h-[400px] rounded-[10px] overflow-hidden"
               >
                 {slide.type === "video" ? (
                   <video
@@ -117,8 +118,8 @@ export default function Homepage() {
                   <Image
                     src={slide.src}
                     alt={`Slide ${idx}`}
-                    width={1920} // your desired width
-                    height={1080} // your desired height
+                    width={1920}
+                    height={1080}
                     className="object-cover w-full h-full"
                   />
                 )}
@@ -127,30 +128,43 @@ export default function Homepage() {
           </div>
         </div>
 
-        {/* Arrows */}
+        {/* Arrows (rectangle style same as desktop) */}
         <button
           onClick={prevSlide}
           aria-label="Previous slide"
-          className="absolute top-1/2 left-2 sm:left-[40px] -translate-y-1/2 w-[60px] h-[38px] bg-white bg-opacity-90 rounded-[10px] shadow-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hover:bg-gray-100 hover:shadow-xl cursor-pointer transform hover:scale-105"
+          className="absolute top-1/2 left-2 sm:left-[40px] -translate-y-1/2 
+               w-[50px] h-[35px] sm:w-[60px] sm:h-[38px] 
+               bg-white bg-opacity-90 rounded-[10px] shadow-lg 
+               flex items-center justify-center 
+               opacity-100 sm:opacity-0 sm:group-hover:opacity-100 
+               transition-opacity duration-300 z-10 
+               hover:bg-gray-100 hover:shadow-xl cursor-pointer transform hover:scale-105"
         >
           <div className="w-0 h-0 border-y-[7px] border-y-transparent border-r-[10px] border-r-black ml-[6px]" />
         </button>
+
         <button
           onClick={nextSlide}
           aria-label="Next slide"
-          className="absolute top-1/2 right-2 sm:right-[40px] -translate-y-1/2 w-[60px] h-[38px] bg-white bg-opacity-90 rounded-[10px] shadow-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hover:bg-gray-100 hover:shadow-xl cursor-pointer transform hover:scale-105"
+          className="absolute top-1/2 right-2 sm:right-[40px] -translate-y-1/2 
+               w-[50px] h-[35px] sm:w-[60px] sm:h-[38px] 
+               bg-white bg-opacity-90 rounded-[10px] shadow-lg 
+               flex items-center justify-center 
+               opacity-100 sm:opacity-0 sm:group-hover:opacity-100 
+               transition-opacity duration-300 z-10 
+               hover:bg-gray-100 hover:shadow-xl cursor-pointer transform hover:scale-105"
         >
           <div className="w-0 h-0 border-y-[7px] border-y-transparent border-l-[10px] border-l-black mr-[6px]" />
         </button>
 
         {/* Dots */}
-        <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex space-x-3 z-10">
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3 z-10">
           {slides.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setCurrentIndex(idx)}
               aria-label={`Go to slide ${idx + 1}`}
-              className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${
+              className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 cursor-pointer ${
                 currentIndex === idx
                   ? "bg-black scale-125 shadow-lg"
                   : "bg-gray-300 hover:bg-gray-400"
