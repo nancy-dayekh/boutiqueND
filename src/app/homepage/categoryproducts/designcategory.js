@@ -20,7 +20,6 @@ export default function DesignCategory() {
 
   return (
     <div className="px-4 py-8">
-
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 justify-items-center">
         {categories.map((cat) => (
           <Link
@@ -30,11 +29,7 @@ export default function DesignCategory() {
           >
             <div className="w-24 h-24 rounded-full overflow-hidden border border-gray-300 shadow">
               <Image
-                src={
-                  cat.image_url // << استخدمي الرابط الكامل من الـ accessor
-                    ? cat.image_url
-                    : "/placeholder.png"
-                }
+                src={cat.image_url ?? "/placeholder.png"}
                 alt={cat.name}
                 width={96}
                 height={96}
