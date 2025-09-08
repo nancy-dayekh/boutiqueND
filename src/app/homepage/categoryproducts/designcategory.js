@@ -7,10 +7,6 @@ import Image from "next/image";
 export default function DesignCategory() {
   const [categories, setCategories] = useState([]);
 
-  // مسار الصور من Hostinger
-  const imageBaseURL =
-    "https://srv1862-files.hstgr.io/bc211f3dd554dde3/files/backend/storage/app/public/uploads/images/";
-
   useEffect(() => {
     fetch("https://devflowlb.com/api/categories")
       .then((res) => res.json())
@@ -33,14 +29,12 @@ export default function DesignCategory() {
           >
             <div className="w-24 h-24 rounded-full overflow-hidden border border-gray-300 shadow">
               <Image
-                src={
-                  cat.image ? `${imageBaseURL}${cat.image}` : "/placeholder.png"
-                }
+                src={cat.image_url || "/placeholder.png"}
                 alt={cat.name}
                 width={96}
                 height={96}
                 className="w-full h-full object-cover"
-                unoptimized // ⬅️ مهم إذا الصور ما ظهرت بعد الإعداد
+                unoptimized // مهم للصور من سيرفر خارجي
               />
             </div>
             <p className="mt-2 text-sm text-center text-black">{cat.name}</p>
