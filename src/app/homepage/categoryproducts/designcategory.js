@@ -34,14 +34,13 @@ export default function DesignCategory() {
             <div className="w-24 h-24 rounded-full overflow-hidden border border-gray-300 shadow">
               <Image
                 src={
-                  cat.image
-                    ? `${imageBaseURL}${cat.image}`
-                    : "/placeholder.png"
+                  cat.image ? `${imageBaseURL}${cat.image}` : "/placeholder.png"
                 }
                 alt={cat.name}
                 width={96}
                 height={96}
                 className="w-full h-full object-cover"
+                unoptimized // ⬅️ مهم إذا الصور ما ظهرت بعد الإعداد
               />
             </div>
             <p className="mt-2 text-sm text-center text-black">{cat.name}</p>
