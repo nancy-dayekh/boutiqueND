@@ -28,13 +28,14 @@ export default function DesignCategory() {
             className="flex flex-col items-center cursor-pointer hover:scale-105 transition-transform duration-300"
           >
             <div className="w-24 h-24 rounded-full overflow-hidden border border-gray-300 shadow">
-              <Image
-                src={cat.image_url ?? "/placeholder.png"}
-                alt={cat.name}
-                width={96}
-                height={96}
-                className="w-full h-full object-cover"
-              />
+       <Image
+  src={cat.image_url ?? "/placeholder.png"}
+  alt={cat.name}
+  width={96}
+  height={96}
+  className="w-full h-full object-cover"
+/>
+
             </div>
             <p className="mt-2 text-sm text-center text-black">{cat.name}</p>
           </Link>
