@@ -20,7 +20,7 @@ export default function Review() {
 
     const token = localStorage.getItem("auth_token");
 
-    fetch(`http://127.0.0.1:8000/api/products/${productId}/reviews`, {
+    fetch(`https://devflowlb.com/api/products/${productId}/reviews`, {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
@@ -63,7 +63,7 @@ export default function Review() {
 
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/api/customer/products/${productId}/reviews`,
+        `https://devflowlb.com/api/customer/products/${productId}/reviews`,
         {
           method: "POST",
           headers: {

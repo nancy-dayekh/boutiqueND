@@ -7,8 +7,8 @@ import Image from "next/image";
 export default function Products({ products = [], searchTerm = "" }) {
   const router = useRouter();
   const [favorites, setFavorites] = useState([]);
-  const imageBaseURL = "http://127.0.0.1:8000/storage/";
-  const fallbackImage = "http://127.0.0.1:8000/images/default.jpg";
+  const imageBaseURL = "https://devflowlb.com/storage/";
+  const fallbackImage = "https://devflowlb.com/images/default.jpg";
 
   const token =
     typeof window !== "undefined" ? localStorage.getItem("auth_token") : null;
@@ -24,7 +24,7 @@ export default function Products({ products = [], searchTerm = "" }) {
       const fetchWishlist = async () => {
         try {
           const res = await fetch(
-            "http://127.0.0.1:8000/api/customer/wishlist",
+            "https://devflowlb.com/api/customer/wishlist",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -54,7 +54,7 @@ export default function Products({ products = [], searchTerm = "" }) {
     if (isAuthenticated) {
       if (favorites.includes(id)) {
         try {
-          await fetch(`http://127.0.0.1:8000/api/customer/wishlist/${id}`, {
+          await fetch(`https://devflowlb.com/api/customer/wishlist/${id}`, {
             method: "DELETE",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -67,7 +67,7 @@ export default function Products({ products = [], searchTerm = "" }) {
         }
       } else {
         try {
-          await fetch("http://127.0.0.1:8000/api/customer/wishlist", {
+          await fetch("https://devflowlb.com/api/customer/wishlist", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

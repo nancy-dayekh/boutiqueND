@@ -48,7 +48,7 @@ export default function HmFilterSortCopy() {
       queryParams.push(`min_price=${priceRange[0]}&max_price=${priceRange[1]}`);
 
     const query = queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
-    const url = `http://127.0.0.1:8000/api/products/category/${categoryName}${query}`;
+    const url = `https://devflowlb.com/api/products/category/${categoryName}${query}`;
 
     try {
       const res = await fetch(url);

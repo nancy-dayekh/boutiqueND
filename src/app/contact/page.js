@@ -28,7 +28,7 @@ async function handleSendMessage(e) {
 
   try {
     const res = await fetch(
-      "http://127.0.0.1:8000/api/customer/MessageFeedback",
+      "https://devflowlb.com/api/customer/MessageFeedback",
       {
         method: "POST",
         headers: {

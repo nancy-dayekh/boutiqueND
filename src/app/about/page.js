@@ -29,8 +29,8 @@ export default function About() {
   return (
     <div className="w-full bg-white font-sans">
       {/* Hero Section */}
-      <div className="mt-20 px-4 sm:px-6 md:px-10"> {/* mt applied for mobile & desktop */}
-        <div className="relative w-full min-h-[300px] sm:h-[330px] overflow-hidden rounded-xl shadow-lg">
+      <div className="mt-20 px-4 sm:px-16 md:px-10">
+        <div className="relative w-full h-[300px] sm:h-[330px] rounded-xl shadow-lg overflow-hidden">
           <video
             src="/video/contactuss.mp4"
             autoPlay
@@ -47,13 +47,14 @@ export default function About() {
         </div>
       </div>
 
-      {/* Intro Section */}
+      {/* Intro */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center py-16">
         <p
           className="text-lg text-gray-700 leading-relaxed opacity-0 translate-y-5 transition-all duration-700 ease-out will-change-transform animate-scroll"
           style={{ transitionDelay: "150ms" }}
         >
-          At <strong>Boutique ND</strong>, we craft every garment with love and care, bringing you clothes that users truly cherish and enjoy wearing.
+          At <strong>Boutique ND</strong>, we craft every garment with love and
+          care, bringing you clothes that users truly cherish and enjoy wearing.
         </p>
         <p
           className="text-sm text-gray-500 mt-2 opacity-0 translate-y-5 transition-all duration-700 ease-out animate-scroll"
@@ -64,7 +65,7 @@ export default function About() {
       </div>
 
       {/* Section 1 */}
-      <div className="grid md:grid-cols-2 items-center gap-10 max-w-6xl mx-auto px-4 sm:px-6 py-16">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 py-16 grid md:grid-cols-2 items-center gap-10">
         <div
           className="w-full flex justify-center opacity-0 translate-y-5 transition-all duration-700 ease-out will-change-transform animate-scroll"
           style={{ transitionDelay: "450ms" }}
@@ -85,7 +86,9 @@ export default function About() {
           className="text-gray-700 text-lg leading-relaxed opacity-0 translate-y-5 transition-all duration-700 ease-out will-change-transform animate-scroll"
           style={{ transitionDelay: "600ms" }}
         >
-          Every piece we create reflects careful craftsmanship — from handpicked natural fabrics to delicate stitching and elegant trims. Our garments speak the language of quiet luxury — simple, refined, and magical.
+          Every piece we create reflects careful craftsmanship — from handpicked
+          natural fabrics to delicate stitching and elegant trims. Our garments
+          speak the language of quiet luxury — simple, refined, and magical.
         </div>
       </div>
     </div>

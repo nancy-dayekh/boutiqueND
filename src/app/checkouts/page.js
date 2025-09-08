@@ -27,7 +27,7 @@ export default function Checkout() {
 
   // Fetch shipping info
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/nbdelivery")
+    fetch("https://devflowlb.com/api/nbdelivery")
       .then((res) => res.json())
       .then((data) => {
         if (data.length > 0) setShipping(data[0]);
@@ -47,7 +47,7 @@ export default function Checkout() {
     };
 
     // Fetch user data
-    fetch("http://127.0.0.1:8000/api/customer/me", {
+    fetch("https://devflowlb.com/api/customer/me", {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -75,7 +75,7 @@ export default function Checkout() {
       });
 
     // ✅ Fetch cart from /api/customer/cart
-    fetch("http://127.0.0.1:8000/api/customer/cart", { headers })
+    fetch("https://devflowlb.com/api/customer/cart", { headers })
       .then((res) => res.json())
       .then((data) => {
         if (data.cart_items) {
@@ -166,8 +166,8 @@ export default function Checkout() {
 
       // 🟢 Use guest or customer endpoint
       const shipmentUrl = isLoggedIn
-        ? "http://127.0.0.1:8000/api/customer/shipments"
-        : "http://127.0.0.1:8000/api/guest/shipments";
+        ? "https://devflowlb.com/api/customer/shipments"
+        : "https://devflowlb.com/api/guest/shipments";
 
       const shipmentRes = await fetch(shipmentUrl, {
         method: "POST",
@@ -187,8 +187,8 @@ export default function Checkout() {
       if (!shipmentRes.ok) throw new Error("Shipment failed");
 
       const paymentUrl = isLoggedIn
-        ? "http://127.0.0.1:8000/api/customer/payments"
-        : "http://127.0.0.1:8000/api/guest/payments";
+        ? "https://devflowlb.com/api/customer/payments"
+        : "https://devflowlb.com/api/guest/payments";
 
       const paymentRes = await fetch(paymentUrl, {
         method: "POST",
@@ -204,8 +204,8 @@ export default function Checkout() {
       if (!paymentRes.ok) throw new Error("Payment failed");
 
       const orderUrl = isLoggedIn
-        ? "http://127.0.0.1:8000/api/customer/orders"
-        : "http://127.0.0.1:8000/api/guest/orders";
+        ? "https://devflowlb.com/api/customer/orders"
+        : "https://devflowlb.com/api/guest/orders";
 
       const orderRes = await fetch(orderUrl, {
         method: "POST",
@@ -222,8 +222,8 @@ export default function Checkout() {
       if (!orderRes.ok) throw new Error("Order failed");
 
       const orderItemUrl = isLoggedIn
-        ? "http://127.0.0.1:8000/api/customer/order-items"
-        : "http://127.0.0.1:8000/api/guest/order-items";
+        ? "https://devflowlb.com/api/customer/order-items"
+        : "https://devflowlb.com/api/guest/order-items";
 
       for (const item of cart) {
         const res = await fetch(orderItemUrl, {
@@ -242,7 +242,7 @@ export default function Checkout() {
 
       // نمسح الـ cart في الـ backend بعد تأكيد إضافة الـ order items
       if (isLoggedIn) {
-        await fetch("http://127.0.0.1:8000/api/customer/cart/clear", {
+        await fetch("https://devflowlb.com/api/customer/cart/clear", {
           method: "POST",
           headers,
         });
@@ -370,15 +370,14 @@ export default function Checkout() {
                 key={item.id}
                 className="flex items-center mb-4 border-b pb-3"
               >
-       <div className="w-16 h-16 relative">
-  <Image
-    src={`http://127.0.0.1:8000/storage/${item.image}`}
-    alt={item.name}
-    fill
-    className="object-cover rounded"
-  />
-</div>
-
+                <div className="w-16 h-16 relative">
+                  <Image
+                    src={`https://devflowlb.com/storage/${item.image}`}
+                    alt={item.name}
+                    fill
+                    className="object-cover rounded"
+                  />
+                </div>
 
                 <div className="flex justify-between w-full">
                   <p className="text-sm font-medium">{item.name}</p>

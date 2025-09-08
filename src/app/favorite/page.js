@@ -22,7 +22,7 @@ export default function Favorite() {
       if (userToken) {
         // ✅ Authenticated user
         try {
-          const res = await fetch("http://127.0.0.1:8000/api/customer/wishlist", {
+          const res = await fetch("https://devflowlb.com/api/customer/wishlist", {
             headers: {
               Authorization: `Bearer ${userToken}`,
               Accept: "application/json",
@@ -45,7 +45,7 @@ export default function Favorite() {
 
           // Fetch each product by ID using /api/products/{id}
           const promises = guestFavorites.map((id) =>
-            fetch(`http://127.0.0.1:8000/api/products/${id}`).then((res) =>
+            fetch(`https://devflowlb.com/api/products/${id}`).then((res) =>
               res.json()
             )
           );

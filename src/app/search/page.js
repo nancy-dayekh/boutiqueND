@@ -15,7 +15,7 @@ export default function SearchProducts() {
   const [noResults, setNoResults] = useState(false);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/allproducts")
+    fetch("https://devflowlb.com/api/allproducts")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
@@ -29,7 +29,7 @@ export default function SearchProducts() {
 
     if (safeSearch === "") {
       // Re-fetch all products if search is cleared
-      fetch("http://127.0.0.1:8000/api/allproducts")
+      fetch("https://devflowlb.com/api/allproducts")
         .then((res) => res.json())
         .then((data) => {
           setProducts(data);
@@ -39,7 +39,7 @@ export default function SearchProducts() {
     }
 
     fetch(
-      `http://127.0.0.1:8000/api/products?search=${encodeURIComponent(
+      `https://devflowlb.com/api/products?search=${encodeURIComponent(
         safeSearch
       )}`,
       {

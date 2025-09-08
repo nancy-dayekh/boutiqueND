@@ -6,10 +6,10 @@ import Image from "next/image";
 
 export default function DesignCategory() {
   const [categories, setCategories] = useState([]);
-  const imageBaseURL = "http://127.0.0.1:8000/storage/";
+  const imageBaseURL = "https://devflowlb.com/storage/";
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/categories")
+    fetch("https://devflowlb.com/api/categories")
       .then((res) => res.json())
       .then((data) => {
         if (data.success && data.data) {

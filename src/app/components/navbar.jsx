@@ -25,7 +25,7 @@ export default function Header() {
   useEffect(() => {
     const token = localStorage.getItem("auth_token");
     if (token) {
-      fetch("http://127.0.0.1:8000/api/customer/me", {
+      fetch("https://devflowlb.com/api/customer/me", {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: "application/json",
@@ -50,7 +50,7 @@ export default function Header() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/categories");
+        const response = await fetch("https://devflowlb.com/api/categories");
         const data = await response.json();
         if (data.success && data.data) {
           setCategoryItems(data.data);

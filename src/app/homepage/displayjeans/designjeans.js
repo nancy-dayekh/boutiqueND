@@ -5,7 +5,7 @@ import Products from "../../products/product/product";
 
 export default function DesignJeangs() {
   const [products, setProducts] = useState([]);
-  const url = "http://127.0.0.1:8000/api/products/category/jeans";
+  const url = "https://devflowlb.com/api/products/category/jeans";
 
   useEffect(() => {
     fetch(url)

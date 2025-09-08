@@ -13,7 +13,7 @@ export default function ProfilePage() {
       return;
     }
 
-    fetch("http://127.0.0.1:8000/api/customer/me", {
+    fetch("https://devflowlb.com/api/customer/me", {
       headers: {
         Authorization: `Bearer ${token}`,
         Accept: "application/json",
@@ -35,7 +35,7 @@ export default function ProfilePage() {
 
     if (token) {
       try {
-        await fetch("http://127.0.0.1:8000/api/customer/logout", {
+        await fetch("https://devflowlb.com/api/customer/logout", {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,

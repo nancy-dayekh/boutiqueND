@@ -14,7 +14,7 @@ export default function NewCollection() {
   const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
 
-  const imageBaseURL = "http://127.0.0.1:8000/storage/";
+  const imageBaseURL = "https://devflowlb.com/storage/";
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -27,7 +27,7 @@ export default function NewCollection() {
     async function fetchProducts() {
       try {
         const res = await fetch(
-          "http://127.0.0.1:8000/api/productsNewcollection"
+          "https://devflowlb.com/api/productsNewcollection"
         );
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();

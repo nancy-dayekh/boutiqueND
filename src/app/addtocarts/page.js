@@ -42,7 +42,7 @@ export default function ShoppingCart() {
 
   const fetchCartFromBackend = async (userToken) => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/customer/cart", {
+      const res = await fetch("https://devflowlb.com/api/customer/cart", {
         headers: {
           Authorization: `Bearer ${userToken}`,
           Accept: "application/json",
@@ -72,7 +72,7 @@ export default function ShoppingCart() {
       cart.map(async (item) => {
         try {
           const res = await fetch(
-            `http://127.0.0.1:8000/api/products/${item.id}`
+            `https://devflowlb.com/api/products/${item.id}`
           );
           const data = await res.json();
           newQuantities[item.id] = parseInt(data.stock) || 1;
@@ -116,7 +116,7 @@ export default function ShoppingCart() {
   const handleRemoveItem = async (item) => {
     if (isLoggedIn) {
       try {
-        await fetch(`http://127.0.0.1:8000/api/customer/cart/${item.cart_id}`, {
+        await fetch(`https://devflowlb.com/api/customer/cart/${item.cart_id}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -158,7 +158,7 @@ export default function ShoppingCart() {
                   className="flex flex-col sm:flex-row items-center sm:items-start border-b border-gray-200 pb-5"
                 >
                   <Image
-                    src={`http://127.0.0.1:8000/storage/${item.image}`}
+                    src={`https://devflowlb.com/storage/${item.image}`}
                     alt={item.name}
                     width={128}
                     height={128}

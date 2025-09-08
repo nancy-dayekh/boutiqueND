@@ -22,7 +22,7 @@ export default function DetailsProducts() {
   const [products, setProducts] = useState([]);
   const [favorites, setFavorites] = useState([]);
 
-  const imageURL = (imgPath) => `http://127.0.0.1:8000/storage/${imgPath}`;
+  const imageURL = (imgPath) => `https://devflowlb.com/storage/${imgPath}`;
   const [token, setToken] = useState(null);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function DetailsProducts() {
   useEffect(() => {
     if (!id) return;
 
-    fetch(`http://127.0.0.1:8000/api/products/${id}`)
+    fetch(`https://devflowlb.com/api/products/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setProduct(data);
@@ -47,7 +47,7 @@ export default function DetailsProducts() {
         setSelectedSize(sizes[0] || "");
       });
 
-    fetch(`http://127.0.0.1:8000/api/multiImageProducts/${id}`)
+    fetch(`https://devflowlb.com/api/multiImageProducts/${id}`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) setMultImages(data);
@@ -57,7 +57,7 @@ export default function DetailsProducts() {
         setCurrentImageIndex(0);
       });
 
-    fetch("http://127.0.0.1:8000/api/allproducts")
+    fetch("https://devflowlb.com/api/allproducts")
       .then((res) => res.json())
       .then(setProducts);
 
@@ -87,7 +87,7 @@ export default function DetailsProducts() {
       }
     }
 
-    fetch(`http://127.0.0.1:8000/api/products/${id}/reviews?limit=3`)
+    fetch(`https://devflowlb.com/api/products/${id}/reviews?limit=3`)
       .then((res) => res.json())
       .then((data) => setReviews(data.reviews || []));
   }, [id]);
@@ -112,7 +112,7 @@ export default function DetailsProducts() {
     if (userToken) {
       try {
         const response = await fetch(
-          "http://127.0.0.1:8000/api/customer/wishlist",
+          "https://devflowlb.com/api/customer/wishlist",
           {
             method: "POST",
             headers: {
@@ -162,7 +162,7 @@ export default function DetailsProducts() {
 
     if (token) {
       try {
-        const res = await fetch(`http://127.0.0.1:8000/api/customer/cart`, {
+        const res = await fetch(`https://devflowlb.com/api/customer/cart`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,

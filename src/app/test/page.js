@@ -15,7 +15,7 @@ export default function Test() {
       }
 
       try {
-        const res = await fetch("http://127.0.0.1:8000/api/customer/me", {
+        const res = await fetch("https://devflowlb.com/api/customer/me", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`, // ✅ Send token manually
