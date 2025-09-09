@@ -14,8 +14,6 @@ export default function NewCollection() {
   const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
 
-  const imageBaseURL = "https://devflowlb.com/storage/";
-
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
@@ -26,7 +24,9 @@ export default function NewCollection() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await fetch("https://devflowlb.com/api/productsNewcollection");
+        const res = await fetch(
+          "https://devflowlb.com/api/productsNewcollection"
+        );
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
         setProducts(data);
@@ -41,21 +41,36 @@ export default function NewCollection() {
 
   const totalProducts = products.length;
 
+  // Number of columns and rows
   const columns = isMobile ? 2 : 3;
   const rows = 2;
+
+  // Total visible products
   const visibleCount = columns * rows;
+
+  // Step for navigation: move by columns (one row at a time)
   const step = columns;
 
+  // Wrap index helper
   const getIndex = (index) => (index + totalProducts) % totalProducts;
 
+  // Get visible products
   const displayedProducts = [];
   for (let i = 0; i < visibleCount; i++) {
     displayedProducts.push(products[getIndex(currentIndex + i)]);
   }
 
-  const handleNext = () => setCurrentIndex(getIndex(currentIndex + step));
-  const handlePrevious = () => setCurrentIndex(getIndex(currentIndex - step));
-  const handleProductClick = (id) => router.push(`/products/${id}`);
+  const handleNext = () => {
+    setCurrentIndex(getIndex(currentIndex + step));
+  };
+
+  const handlePrevious = () => {
+    setCurrentIndex(getIndex(currentIndex - step));
+  };
+
+  const handleProductClick = (id) => {
+    router.push(`/products/${id}`);
+  };
 
   if (loading) {
     return (
@@ -66,7 +81,9 @@ export default function NewCollection() {
   }
 
   if (totalProducts === 0) {
-    return <p className="text-center py-20 text-gray-500">No products found.</p>;
+    return (
+      <p className="text-center py-20 text-gray-500">No products found.</p>
+    );
   }
 
   return (
@@ -94,7 +111,11 @@ export default function NewCollection() {
         </button>
 
         {/* Product Grid */}
-        <div className={`grid ${isMobile ? "grid-cols-2" : "grid-cols-3"} grid-rows-2 gap-4`}>
+        <div
+          className={`grid ${
+            isMobile ? "grid-cols-2" : "grid-cols-3"
+          } grid-rows-2 gap-4`}
+        >
           {displayedProducts.map(
             (product) =>
               product && (
@@ -105,23 +126,20 @@ export default function NewCollection() {
                 >
                   <div className="relative w-full h-[300px] sm:h-[250px] overflow-hidden rounded-lg">
                     <Image
-                      src={
-                        product.image?.startsWith("http")
-                          ? product.image
-                          : `${imageBaseURL}${product.image || ""}`
-                      }
+                      src={product.image ? product.image : fallbackImage}
                       alt={product.name || "product image"}
                       fill
                       className="object-cover transition-transform duration-300 transform group-hover:scale-105"
-                      onError={(e) => {
-                        e.currentTarget.src = fallbackImage;
-                      }}
                     />
                   </div>
 
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <h3 className="text-white font-semibold text-base">{product.name}</h3>
-                    <p className="text-white font-light mt-0.5">${product.price}</p>
+                    <h3 className="text-white font-semibold text-base">
+                      {product.name}
+                    </h3>
+                    <p className="text-white font-light mt-0.5">
+                      ${product.price}
+                    </p>
                   </div>
                 </div>
               )
