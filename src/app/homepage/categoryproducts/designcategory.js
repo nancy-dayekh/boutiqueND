@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
+const fallbackImage = "/placeholder.png"; // ضع صورة افتراضية هنا
+
 export default function DesignCategory() {
   const [categories, setCategories] = useState([]);
-  const imageBaseURL = "https://devflowlb.com/storage/";
-
+  
   useEffect(() => {
     fetch("https://devflowlb.com/api/categories")
       .then((res) => res.json())
@@ -30,11 +31,9 @@ export default function DesignCategory() {
           >
             <div className="w-24 h-24 rounded-full overflow-hidden border border-gray-300 shadow">
               <Image
-                src={
-                  cat.image ? `${imageBaseURL}${cat.image}` : "/placeholder.png"
-                }
-                alt={cat.name}
-                width={96} // 24 * 4px (Tailwind's w-24)
+                src={cat.image || fallbackImage} // صححت هنا
+                alt={cat.name || "category image"} // صححت هنا
+                width={96} // يمكن استخدام fill إذا أردت ملء العنصر
                 height={96}
                 className="w-full h-full object-cover"
               />

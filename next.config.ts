@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['srv1862-files.hstgr.io', 'devflowlb.com'],
+    domains: ['devflowlb.com'], // اسم الدومين الذي تستضيف عليه الصور
   },
 };
 
