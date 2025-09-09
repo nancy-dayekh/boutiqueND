@@ -124,7 +124,7 @@ export default function NewCollection() {
                   className="group relative cursor-pointer overflow-hidden rounded-md shadow-md"
                   onClick={() => handleProductClick(product.id)}
                 >
-                  <div className="relative w-full h-[300px] sm:h-[250px] overflow-hidden rounded-lg">
+                  <div className="relative w-full h-[200px] sm:h-[250px] md:h-[300px] overflow-hidden rounded-lg">
                     <Image
                       src={product.image ? product.image : fallbackImage}
                       alt={product.name || "product image"}
