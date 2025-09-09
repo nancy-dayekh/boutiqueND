@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image"; // <-- you need this import
+import Image from "next/image";
 
 export default function DesignCategory() {
   const [categories, setCategories] = useState([]);
-  const fallbackImage = "/fallback.png"; // local fallback in /public folder
+  const fallbackImage = "/fallback.png"; // local fallback
 
   useEffect(() => {
     fetch("https://devflowlb.com/api/categories")
@@ -36,7 +36,7 @@ export default function DesignCategory() {
                 width={96}
                 height={96}
                 className="object-cover"
-                unoptimized // important for external Hostinger CDN images
+                unoptimized
               />
             </div>
             <p className="mt-2 text-sm text-center text-black">{cat.name}</p>
