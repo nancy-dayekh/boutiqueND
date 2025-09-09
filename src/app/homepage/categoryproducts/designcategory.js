@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const fallbackImage = "/placeholder.png"; // ضع صورة افتراضية هنا
-
 export default function DesignCategory() {
   const [categories, setCategories] = useState([]);
-  
+  const imageBaseURL = "https://devflowlb.com/storage/";
+
+  // Fallback image if no image exists
+  const fallbackImage = "/fallback.png"; // put a local fallback image in public folder
+
   useEffect(() => {
     fetch("https://devflowlb.com/api/categories")
       .then((res) => res.json())
@@ -31,11 +33,11 @@ export default function DesignCategory() {
           >
             <div className="w-24 h-24 rounded-full overflow-hidden border border-gray-300 shadow">
               <Image
-                src={cat.image || fallbackImage} // صححت هنا
-                alt={cat.name || "category image"} // صححت هنا
-                width={96} // يمكن استخدام fill إذا أردت ملء العنصر
+                src={cat.image ? `${imageBaseURL}${cat.image}` : fallbackImage}
+                alt={cat.name || "category image"}
+                width={96} // 24 * 4
                 height={96}
-                className="w-full h-full object-cover"
+                className="object-cover transition-transform duration-300"
               />
             </div>
             <p className="mt-2 text-sm text-center text-black">{cat.name}</p>
