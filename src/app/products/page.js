@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function Collection() {
   const [categories, setCategories] = useState([]);
-  const imageBaseURL = "https://devflowlb.com/uploads/images/"; // Correct path
+  const fallbackImage = "/placeholder.png"; // Make sure this exists in /public
 
   useEffect(() => {
     fetch("https://devflowlb.com/api/categories")
@@ -33,19 +33,13 @@ export default function Collection() {
               href={`/products/${encodeURIComponent(cat.name)}`}
               className="block w-full sm:w-[300px]"
             >
-              <div className="relative w-full h-[180px] sm:h-[400px] overflow-hidden border-4 border-white transition-transform duration-300 hover:scale-105">
+              <div className="relative w-full h-[180px] sm:h-[400px] overflow-hidden border-4 border-white transition-transform duration-300 hover:scale-105 flex items-center justify-center">
                 <Image
-                  src={
-                    cat.image
-                      ? cat.image.startsWith("http")
-                        ? cat.image
-                        : `${imageBaseURL}${cat.image.split("/").pop()}` // Use only the filename
-                      : "/placeholder.png"
-                  }
+                  src={cat.image || fallbackImage}
                   alt={cat.name}
                   fill
                   className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 300px"
+                  onError={(e) => (e.currentTarget.src = fallbackImage)}
                 />
                 <div className="absolute bottom-0 left-0 w-full bg-white/90 py-3 text-center">
                   <p className="text-black text-sm font-medium tracking-wide uppercase">
