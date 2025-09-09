@@ -158,12 +158,13 @@ export default function ShoppingCart() {
                   className="flex flex-col sm:flex-row items-center sm:items-start border-b border-gray-200 pb-5"
                 >
                   <Image
-                    src={`https://devflowlb.com/storage/${item.image}`}
+                    src={item.image || "/placeholder.png"} // fallback image
                     alt={item.name}
                     width={128}
                     height={128}
                     className="rounded-lg object-cover shadow-sm"
                   />
+
                   <div className="flex flex-col sm:ml-6 flex-1 w-full mt-4 sm:mt-0">
                     <h2 className="text-lg font-semibold text-gray-900 line-clamp-2">
                       {item.name}
