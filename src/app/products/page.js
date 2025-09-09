@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function Collection() {
   const [categories, setCategories] = useState([]);
-  const imageBaseURL = "https://devflowlb.com/storage/";
+  const imageBaseURL = "https://devflowlb.com/uploads/images/"; // Correct path
 
   useEffect(() => {
     fetch("https://devflowlb.com/api/categories")
@@ -37,12 +37,15 @@ export default function Collection() {
                 <Image
                   src={
                     cat.image
-                      ? `${imageBaseURL}${cat.image}`
+                      ? cat.image.startsWith("http")
+                        ? cat.image
+                        : `${imageBaseURL}${cat.image.split("/").pop()}` // Use only the filename
                       : "/placeholder.png"
                   }
                   alt={cat.name}
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 300px"
                 />
                 <div className="absolute bottom-0 left-0 w-full bg-white/90 py-3 text-center">
                   <p className="text-black text-sm font-medium tracking-wide uppercase">
