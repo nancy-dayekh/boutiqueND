@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image"; // <-- you need this import
 
 export default function DesignCategory() {
   const [categories, setCategories] = useState([]);
@@ -29,11 +30,13 @@ export default function DesignCategory() {
             className="flex flex-col items-center cursor-pointer hover:scale-105 transition-transform duration-300"
           >
             <div className="w-24 h-24 rounded-full overflow-hidden border border-gray-300 shadow">
-              <img
+              <Image
                 src={cat.image || fallbackImage}
                 alt={cat.name || "category image"}
-                className="w-full h-full object-cover"
-                onError={(e) => { e.currentTarget.src = fallbackImage; }}
+                width={96}
+                height={96}
+                className="object-cover"
+                unoptimized // important for external Hostinger CDN images
               />
             </div>
             <p className="mt-2 text-sm text-center text-black">{cat.name}</p>
