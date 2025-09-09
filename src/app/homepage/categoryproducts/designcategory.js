@@ -21,7 +21,7 @@ export default function DesignCategory() {
 
   return (
     <div className="px-4 py-8">
-      <h1>akhhh</h1>
+      <h1>ya rab</h1>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 justify-items-center">
         {categories.map((cat) => (
           <Link
@@ -31,12 +31,12 @@ export default function DesignCategory() {
           >
             <div className="w-24 h-24 rounded-full overflow-hidden border border-gray-300 shadow">
               <Image
+                loader={({ src }) => src} // directly load external URLs
                 src={cat.image || fallbackImage}
                 alt={cat.name || "category image"}
                 width={96}
                 height={96}
                 className="object-cover"
-                unoptimized
               />
             </div>
             <p className="mt-2 text-sm text-center text-black">{cat.name}</p>
