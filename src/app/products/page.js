@@ -37,11 +37,10 @@ export default function Collection() {
                 <Image
                   src={cat.image || fallbackImage}
                   alt={cat.name}
-                  width={300}
-                  height={400}
+                  fill
                   className="object-cover"
+                  onError={(e) => (e.currentTarget.src = fallbackImage)}
                 />
-
                 <div className="absolute bottom-0 left-0 w-full bg-white/90 py-3 text-center">
                   <p className="text-black text-sm font-medium tracking-wide uppercase">
                     {cat.name}
