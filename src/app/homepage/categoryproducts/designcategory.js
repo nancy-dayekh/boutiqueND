@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function DesignCategory() {
   const [categories, setCategories] = useState([]);
-  const fallbackImage = "/fallback.png";
+  const fallbackImage = "/fallback.png"; // Make sure this file exists in /public
 
   useEffect(() => {
     fetch("https://devflowlb.com/api/categories")
@@ -21,7 +21,7 @@ export default function DesignCategory() {
 
   return (
     <div className="px-4 py-8">
-      <h1 className="text-xl font-bold mb-4">nnn</h1>
+      <h1 className="text-2xl font-bold mb-6 text-center">Categories</h1>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 justify-items-center">
         {categories.map((cat) => (
           <Link
@@ -29,15 +29,18 @@ export default function DesignCategory() {
             href={`/products/${encodeURIComponent(cat.name)}`}
             className="flex flex-col items-center cursor-pointer hover:scale-105 transition-transform duration-300"
           >
-            <div className="w-24 h-24 rounded-full overflow-hidden border border-gray-300 shadow relative">
+            <div className="w-24 h-24 rounded-full overflow-hidden border border-gray-300 shadow relative flex items-center justify-center">
               <Image
                 src={cat.image || fallbackImage}
                 alt={cat.name || "category image"}
                 fill
                 className="object-cover"
+                onError={(e) => (e.currentTarget.src = fallbackImage)}
               />
             </div>
-            <p className="mt-2 text-sm text-center text-black">{cat.name}</p>
+            <p className="mt-2 text-sm text-center text-black font-medium">
+              {cat.name}
+            </p>
           </Link>
         ))}
       </div>
