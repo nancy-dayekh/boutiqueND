@@ -372,10 +372,11 @@ export default function Checkout() {
               >
                 <div className="w-16 h-16 relative">
                   <Image
-                    src={`https://devflowlb.com/storage/${item.image}`}
+                    src={item.image || "/placeholder.png"} // fallback image
                     alt={item.name}
                     fill
                     className="object-cover rounded"
+                    unoptimized // optional, avoids Next.js optimization for external images
                   />
                 </div>
 
