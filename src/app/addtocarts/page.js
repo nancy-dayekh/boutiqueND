@@ -14,6 +14,7 @@ export default function ShoppingCart() {
   const [isClient, setIsClient] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState("");
+  const fallbackImage = "/default-product.png";
 
   useEffect(() => {
     setIsClient(true);
@@ -158,7 +159,7 @@ export default function ShoppingCart() {
                   className="flex flex-col sm:flex-row items-center sm:items-start border-b border-gray-200 pb-5"
                 >
                   <Image
-                    src={item.image || "/placeholder.png"} // fallback image
+                      src={item.image ? item.image : fallbackImage}
                     alt={item.name}
                     width={128}
                     height={128}
