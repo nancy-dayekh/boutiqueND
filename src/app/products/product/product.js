@@ -7,7 +7,6 @@ import Image from "next/image";
 export default function Products({ products = [], searchTerm = "" }) {
   const router = useRouter();
   const [favorites, setFavorites] = useState([]);
-  const imageBaseURL = "https://devflowlb.com/storage/";
   const fallbackImage = "https://devflowlb.com/images/default.jpg";
 
   const token =
@@ -119,13 +118,10 @@ export default function Products({ products = [], searchTerm = "" }) {
 
               <div className="relative w-full h-[220px] md:h-[300px] overflow-hidden rounded-md">
                 <Image
-                  src={`${imageBaseURL}${p.image || ""}`}
+                  src={p.image ? p.image : fallbackImage}
                   alt={p.name || "product image"}
                   fill
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = fallbackImage;
-                  }}
+           
                   className="object-cover transition-transform duration-300 transform group-hover:scale-105"
                 />
               </div>
