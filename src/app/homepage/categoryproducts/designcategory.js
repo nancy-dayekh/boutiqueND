@@ -6,7 +6,6 @@ import Image from "next/image";
 
 export default function DesignCategory() {
   const [categories, setCategories] = useState([]);
-
   const fallbackImage = "/fallback.png"; // local fallback
 
   useEffect(() => {
@@ -31,11 +30,11 @@ export default function DesignCategory() {
           >
             <div className="w-24 h-24 rounded-full overflow-hidden border border-gray-300 shadow">
               <Image
-                src={cat.image || fallbackImage}
+                src={cat.image || "/fallback.png"}
                 alt={cat.name || "category image"}
                 width={96}
                 height={96}
-                className="object-cover transition-transform duration-300"
+                className="object-cover"
               />
             </div>
             <p className="mt-2 text-sm text-center text-black">{cat.name}</p>
