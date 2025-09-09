@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -10,7 +11,6 @@ export default function DetailsProducts() {
   const params = useParams();
   const id = params.productsid;
   const router = useRouter();
-
   const [reviews, setReviews] = useState([]);
   const [product, setProduct] = useState(null);
   const [multImages, setMultImages] = useState([]);
@@ -21,9 +21,9 @@ export default function DetailsProducts() {
   const [selectedSize, setSelectedSize] = useState("");
   const [products, setProducts] = useState([]);
   const [favorites, setFavorites] = useState([]);
-  const [token, setToken] = useState(null);
 
-  const fallbackImage = "/fallback.png";
+  const imageURL = (imgPath) => `https://devflowlb.com/storage/${imgPath}`;
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("auth_token");
@@ -33,7 +33,6 @@ export default function DetailsProducts() {
   useEffect(() => {
     if (!id) return;
 
-    // Fetch Product
     fetch(`https://devflowlb.com/api/products/${id}`)
       .then((res) => res.json())
       .then((data) => {
@@ -48,7 +47,6 @@ export default function DetailsProducts() {
         setSelectedSize(sizes[0] || "");
       });
 
-    // Fetch Product Images
     fetch(`https://devflowlb.com/api/multiImageProducts/${id}`)
       .then((res) => res.json())
       .then((data) => {
@@ -59,12 +57,11 @@ export default function DetailsProducts() {
         setCurrentImageIndex(0);
       });
 
-    // Fetch All Products
     fetch("https://devflowlb.com/api/allproducts")
       .then((res) => res.json())
       .then(setProducts);
 
-    // Fetch cart from localStorage safely
+    // --- Safe parse of cart from localStorage ---
     const rawCart = localStorage.getItem("cart");
     let savedCart = [];
     try {
@@ -73,9 +70,14 @@ export default function DetailsProducts() {
     } catch {
       savedCart = [];
     }
-    setCart(savedCart.map((item) => ({ ...item, quantity: item.quantity || 1 })));
 
-    // Fetch favorites from localStorage safely
+    // Optionally map to add quantity default:
+    const cartWithQuantity = savedCart.map((item) => ({
+      ...item,
+      quantity: item.quantity || 1,
+    }));
+    setCart(cartWithQuantity);
+
     const storedFavorites = localStorage.getItem("favorites");
     if (storedFavorites) {
       try {
@@ -85,16 +87,10 @@ export default function DetailsProducts() {
       }
     }
 
-    // Fetch reviews
     fetch(`https://devflowlb.com/api/products/${id}/reviews?limit=3`)
       .then((res) => res.json())
       .then((data) => setReviews(data.reviews || []));
   }, [id]);
-
-  const images = product ? [{ image_path: product.image }, ...multImages] : [];
-  const numericStock = parseInt(product?.stock);
-  const sizes = (product?.size?.split(" ") || []).filter((s) => s.trim() !== "");
-  const isFavorite = favorites.includes(product?.id);
 
   const handlePrevImage = () => {
     setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
@@ -105,6 +101,7 @@ export default function DetailsProducts() {
   };
 
   const toggleFavorite = async (productId) => {
+    const userToken = localStorage.getItem("auth_token");
     const updatedFavorites = favorites.includes(productId)
       ? favorites.filter((fav) => fav !== productId)
       : [...favorites, productId];
@@ -112,18 +109,23 @@ export default function DetailsProducts() {
     setFavorites(updatedFavorites);
     localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
 
-    if (token) {
+    if (userToken) {
       try {
-        const response = await fetch("https://devflowlb.com/api/customer/wishlist", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ product_id: productId }),
-        });
+        const response = await fetch(
+          "https://devflowlb.com/api/customer/wishlist",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${userToken}`,
+            },
+            body: JSON.stringify({ product_id: productId }),
+          }
+        );
 
-        if (!response.ok) console.error("Wishlist API failed");
+        if (!response.ok) {
+          console.error("Wishlist API failed");
+        }
       } catch (error) {
         console.error("Error:", error);
       }
@@ -164,6 +166,7 @@ export default function DetailsProducts() {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
+            Accept: "application/json",
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
@@ -175,7 +178,11 @@ export default function DetailsProducts() {
 
         if (!res.ok) {
           const errorData = await res.json();
-          alert("Error adding to cart: " + (errorData.message || "Unknown error"));
+          alert(
+            "Error adding to cart: " + (errorData.message || "Unknown error")
+          );
+          console.error(errorData);
+          return;
         }
       } catch (error) {
         console.error("Backend sync failed:", error);
@@ -183,7 +190,12 @@ export default function DetailsProducts() {
     }
   };
 
-  const imageURL = (src) => src || fallbackImage;
+  const sizes = (product?.size?.split(" ") || []).filter(
+    (s) => s.trim() !== ""
+  );
+  const images = product ? [{ image_path: product.image }, ...multImages] : [];
+  const isFavorite = favorites.includes(product?.id);
+  const numericStock = parseInt(product?.stock);
 
   if (!product) {
     return (
@@ -200,16 +212,23 @@ export default function DetailsProducts() {
         <div className="md:w-[50%] w-full">
           <div className="relative w-full sm:w-[520px]">
             <img
-              src={imageURL(images[currentImageIndex]?.image_path)}
+              src={imageURL(
+                images[currentImageIndex]?.image_path ||
+                  images[currentImageIndex]?.image
+              )}
               alt={product.name}
               className="rounded-md object-cover w-full h-[300px] sm:h-[350px] md:h-[400px] lg:h-[420px]"
             />
+
+            {/* Left Arrow */}
             <button
               onClick={handlePrevImage}
               className="absolute top-1/2 left-3 transform -translate-y-1/2 bg-white/80 p-2 rounded-full shadow hover:bg-white transition"
             >
               <FaChevronLeft />
             </button>
+
+            {/* Right Arrow */}
             <button
               onClick={handleNextImage}
               className="absolute top-1/2 right-3 transform -translate-y-1/2 bg-white/80 p-2 rounded-full shadow hover:bg-white transition"
@@ -220,10 +239,11 @@ export default function DetailsProducts() {
 
           <div className="flex gap-2 mt-4 overflow-x-auto">
             {images.map((img, idx) => (
+              // eslint-disable-next-line jsx-a11y/alt-text
               <img
                 key={idx}
                 onClick={() => setCurrentImageIndex(idx)}
-                src={imageURL(img.image_path)}
+                src={imageURL(img.image_path || img.image)}
                 className={`h-16 w-16 object-cover rounded-md cursor-pointer ${
                   idx === currentImageIndex
                     ? "ring-2 ring-black"
@@ -233,36 +253,65 @@ export default function DetailsProducts() {
             ))}
           </div>
 
-          {/* Reviews Desktop */}
+          {/* Reviews - Desktop Only */}
           <div className="mt-12 hidden md:block px-2">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-8">Customer Reviews</h2>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-8">
+              Customer Reviews
+            </h2>
+
             {reviews.length === 0 ? (
-              <p className="text-gray-500 text-sm">No reviews yet. Be the first to leave one!</p>
+              <p className="text-gray-500 text-sm">
+                No reviews yet. Be the first to leave one!
+              </p>
             ) : (
               <div className="space-y-6">
                 {reviews.map((review) => (
-                  <div key={review.id} className="bg-white border border-gray-200 rounded-xl shadow hover:shadow-md transition-all p-6">
+                  <div
+                    key={review.id}
+                    className="bg-white border border-gray-200 rounded-xl shadow hover:shadow-md transition-all p-6"
+                  >
                     <div className="flex items-start gap-4">
+                      {/* Image */}
                       {review.image && (
-                        <img src={review.image} alt="Review" className="w-28 h-28 object-cover rounded-lg border" />
+                        <img
+                          src={review.image}
+                          alt="Review"
+                          className="w-28 h-28 object-cover rounded-lg border"
+                        />
                       )}
+
+                      {/* Content */}
                       <div className="flex-1">
                         <div className="flex items-center justify-between">
-                          <h4 className="text-md font-medium text-gray-900">{review.customer_name || "Anonymous"}</h4>
-                          <span className="text-xs text-gray-400">{review.time_ago}</span>
+                          <h4 className="text-md font-medium text-gray-900">
+                            {review.customer_name || "Anonymous"}
+                          </h4>
+                          <span className="text-xs text-gray-400">
+                            {review.time_ago}
+                          </span>
                         </div>
+
+                        {/* Stars */}
                         <div className="mt-1 mb-2 text-yellow-500 text-sm">
                           {"★".repeat(review.rating)}
-                          <span className="text-gray-300">{"★".repeat(5 - review.rating)}</span>
+                          <span className="text-gray-300">
+                            {"★".repeat(5 - review.rating)}
+                          </span>
                         </div>
-                        <p className="text-gray-700 text-sm leading-relaxed">{review.comment}</p>
+
+                        {/* Comment */}
+                        <p className="text-gray-700 text-sm leading-relaxed">
+                          {review.comment}
+                        </p>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
             )}
-            <div className="mt-10">
+
+            {/* Button */}
+            <div className="mt-10 ">
               <button
                 onClick={() => router.push(`/detailsproducts/${id}/review`)}
                 className="w-[200px] py-2 rounded-md font-semibold bg-black text-white hover:bg-gray-900 transition-all"
@@ -277,7 +326,12 @@ export default function DetailsProducts() {
         <div className="md:w-[50%] w-full mt-[10px] mb-5 md:mb-10">
           <div className="flex justify-between items-start mb-4">
             <h1 className="text-xl font-semibold">{product.name}</h1>
-            <button onClick={() => toggleFavorite(product.id)} className={`text-xl ${isFavorite ? "text-red-500" : "text-gray-400"}`}>
+            <button
+              onClick={() => toggleFavorite(product.id)}
+              className={`text-xl ${
+                isFavorite ? "text-red-500" : "text-gray-400"
+              }`}
+            >
               <FaHeart />
             </button>
           </div>
@@ -292,9 +346,9 @@ export default function DetailsProducts() {
             <p>Colors: {product.color || "N/A"}</p>
           </div>
 
-          {/* Quantity & Size */}
           <div className="flex items-center gap-3 mb-4">
             <span className="text-sm font-medium">Quantity:</span>
+
             <button
               onClick={() => quantity > 1 && setQuantity(quantity - 1)}
               disabled={quantity <= 1}
@@ -306,9 +360,15 @@ export default function DetailsProducts() {
             >
               -
             </button>
+
             <span className="w-6 text-center font-medium">{quantity}</span>
+
             <button
-              onClick={() => !isNaN(numericStock) && quantity < numericStock && setQuantity(quantity + 1)}
+              onClick={() =>
+                !isNaN(numericStock) &&
+                quantity < numericStock &&
+                setQuantity(quantity + 1)
+              }
               className="w-8 h-8 flex items-center justify-center rounded-full border transition text-black border-black hover:bg-black hover:text-white"
             >
               +
@@ -316,7 +376,9 @@ export default function DetailsProducts() {
           </div>
 
           <div className="mb-5">
-            <label className="block text-sm font-medium mb-1">Select Size</label>
+            <label className="block text-sm font-medium mb-1">
+              Select Size
+            </label>
             <div className="flex flex-wrap gap-2">
               {sizes.map((size) => (
                 <button
@@ -343,7 +405,9 @@ export default function DetailsProducts() {
                 : "bg-black text-white hover:bg-gray-900"
             }`}
           >
-            {isNaN(numericStock) || numericStock <= 0 ? "Out of Stock" : "Add to Cart"}
+            {isNaN(numericStock) || numericStock <= 0
+              ? "Out of Stock"
+              : "Add to Cart"}
           </button>
 
           <div className="mt-10">
@@ -352,20 +416,90 @@ export default function DetailsProducts() {
               {product.description || "No description available."}
             </p>
           </div>
+
+          {/* Reviews - Mobile Only (Styled like SHEIN) */}
+          <div className="mt-10 md:hidden pl-[2px] pr-4">
+            <h2 className="text-lg font-semibold mb-4 text-gray-900">
+              Customer Reviews
+            </h2>
+
+            {reviews.length === 0 ? (
+              <p className="text-sm text-gray-500">No reviews yet.</p>
+            ) : (
+              <div className="space-y-4">
+                {reviews.map((review) => (
+                  <div
+                    key={review.id}
+                    className="rounded-xl border border-gray-200 p-4 bg-white shadow-sm"
+                  >
+                    {/* Review Image (if exists) */}
+                    {review.image && (
+                      <a
+                        href={review.image}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src={review.image}
+                          alt="review"
+                          className="w-full h-48 object-cover rounded-md mb-2"
+                        />
+                      </a>
+                    )}
+
+                    {/* Review Name */}
+                    <div className="text-sm font-medium text-gray-900">
+                      {review.customer_name || "Anonymous"}
+                    </div>
+
+                    {/* Rating Stars */}
+                    <div className="text-yellow-400 text-sm">
+                      {"★".repeat(review.rating)}
+                      <span className="text-gray-300">
+                        {"★".repeat(5 - review.rating)}
+                      </span>
+                    </div>
+
+                    {/* Comment Text */}
+                    <p className="text-sm text-gray-700 mt-1">
+                      {review.comment}
+                    </p>
+
+                    {/* Time Ago */}
+                    <p className="text-xs text-gray-400 mt-2">
+                      {review.time_ago}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Write a Review Button */}
+            <button
+              onClick={() => router.push(`/detailsproducts/${id}/review`)}
+              className="mt-6 w-full bg-black text-white text-sm font-medium py-2 rounded-md hover:bg-gray-900 transition"
+            >
+              Write a Review
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Recommended Products */}
-      <h2 className="text-lg font-semibold uppercase mt-20 mb-6">You may also like</h2>
+      {/* You may also like */}
+      <h2 className="text-lg font-semibold uppercase mt-20 mb-6">
+        You may also like
+      </h2>
       <div className="flex flex-wrap justify-center gap-4">
         <AllProduct products={products} />
       </div>
 
-      {/* Cart Alert */}
       {alertOpen && (
         <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-md shadow-lg z-50">
           Item added to cart successfully!
-          <button onClick={() => setAlertOpen(false)} className="ml-4 font-bold hover:text-green-200">
+          <button
+            onClick={() => setAlertOpen(false)}
+            className="ml-4 font-bold hover:text-green-200"
+          >
             ×
           </button>
         </div>
