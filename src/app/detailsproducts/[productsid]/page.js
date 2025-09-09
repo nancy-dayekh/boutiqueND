@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-
 "use client";
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { FaChevronLeft, FaChevronRight, FaHeart } from "react-icons/fa";
+import Image from "next/image";
 import AllProduct from "../../products/product/product";
 
 export default function DetailsProducts() {
@@ -23,6 +23,8 @@ export default function DetailsProducts() {
   const [favorites, setFavorites] = useState([]);
 
   const imageURL = (imgPath) => `https://devflowlb.com/storage/${imgPath}`;
+  const fallbackImage = "/default-product.png";
+
   const [token, setToken] = useState(null);
 
   useEffect(() => {
@@ -61,7 +63,6 @@ export default function DetailsProducts() {
       .then((res) => res.json())
       .then(setProducts);
 
-    // --- Safe parse of cart from localStorage ---
     const rawCart = localStorage.getItem("cart");
     let savedCart = [];
     try {
@@ -70,8 +71,6 @@ export default function DetailsProducts() {
     } catch {
       savedCart = [];
     }
-
-    // Optionally map to add quantity default:
     const cartWithQuantity = savedCart.map((item) => ({
       ...item,
       quantity: item.quantity || 1,
@@ -97,7 +96,9 @@ export default function DetailsProducts() {
   };
 
   const handleNextImage = () => {
-    setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    setCurrentImageIndex((prev) =>
+      prev === images.length - 1 ? 0 : prev + 1
+    );
   };
 
   const toggleFavorite = async (productId) => {
@@ -111,21 +112,14 @@ export default function DetailsProducts() {
 
     if (userToken) {
       try {
-        const response = await fetch(
-          "https://devflowlb.com/api/customer/wishlist",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${userToken}`,
-            },
-            body: JSON.stringify({ product_id: productId }),
-          }
-        );
-
-        if (!response.ok) {
-          console.error("Wishlist API failed");
-        }
+        await fetch("https://devflowlb.com/api/customer/wishlist", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`,
+          },
+          body: JSON.stringify({ product_id: productId }),
+        });
       } catch (error) {
         console.error("Error:", error);
       }
@@ -162,7 +156,7 @@ export default function DetailsProducts() {
 
     if (token) {
       try {
-        const res = await fetch(`https://devflowlb.com/api/customer/cart`, {
+        await fetch(`https://devflowlb.com/api/customer/cart`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -175,15 +169,6 @@ export default function DetailsProducts() {
             size: selectedSize,
           }),
         });
-
-        if (!res.ok) {
-          const errorData = await res.json();
-          alert(
-            "Error adding to cart: " + (errorData.message || "Unknown error")
-          );
-          console.error(errorData);
-          return;
-        }
       } catch (error) {
         console.error("Backend sync failed:", error);
       }
@@ -211,14 +196,19 @@ export default function DetailsProducts() {
         {/* Left Column */}
         <div className="md:w-[50%] w-full">
           <div className="relative w-full sm:w-[520px]">
-            <img
-              src={imageURL(
-                images[currentImageIndex]?.image_path ||
-                  images[currentImageIndex]?.image
-              )}
-              alt={product.name}
-              className="rounded-md object-cover w-full h-[300px] sm:h-[350px] md:h-[400px] lg:h-[420px]"
-            />
+            <div className="relative w-full h-[280px] sm:h-[350px] md:h-[400px] lg:h-[420px]">
+              <Image
+                src={
+                  imageURL(
+                    images[currentImageIndex]?.image_path ||
+                      images[currentImageIndex]?.image
+                  ) || fallbackImage
+                }
+                alt={product.name}
+                fill
+                className="rounded-md object-cover"
+              />
+            </div>
 
             {/* Left Arrow */}
             <button
@@ -239,17 +229,22 @@ export default function DetailsProducts() {
 
           <div className="flex gap-2 mt-4 overflow-x-auto">
             {images.map((img, idx) => (
-              // eslint-disable-next-line jsx-a11y/alt-text
-              <img
+              <div
                 key={idx}
                 onClick={() => setCurrentImageIndex(idx)}
-                src={imageURL(img.image_path || img.image)}
-                className={`h-16 w-16 object-cover rounded-md cursor-pointer ${
+                className={`relative h-16 w-16 rounded-md cursor-pointer ${
                   idx === currentImageIndex
                     ? "ring-2 ring-black"
                     : "opacity-60 hover:opacity-100"
                 } transition`}
-              />
+              >
+                <Image
+                  src={imageURL(img.image_path || img.image) || fallbackImage}
+                  alt={`thumb-${idx}`}
+                  fill
+                  className="object-cover rounded-md"
+                />
+              </div>
             ))}
           </div>
 
