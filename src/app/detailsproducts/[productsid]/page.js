@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { FaChevronLeft, FaChevronRight, FaHeart } from "react-icons/fa";
 import AllProduct from "../../products/product/product";
+import Image from "next/image";
 
 export default function DetailsProducts() {
   const params = useParams();
@@ -21,8 +22,8 @@ export default function DetailsProducts() {
   const [selectedSize, setSelectedSize] = useState("");
   const [products, setProducts] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const fallbackImage = "/default-product.png";
 
-  const imageURL = (imgPath) => `https://devflowlb.com/storage/${imgPath}`;
   const [token, setToken] = useState(null);
 
   useEffect(() => {
@@ -211,11 +212,8 @@ export default function DetailsProducts() {
         {/* Left Column */}
         <div className="md:w-[50%] w-full">
           <div className="relative w-full sm:w-[520px]">
-            <img
-              src={imageURL(
-                images[currentImageIndex]?.image_path ||
-                  images[currentImageIndex]?.image
-              )}
+            <Image
+            src={product.image ? product.image : fallbackImage}
               alt={product.name}
               className="rounded-md object-cover w-full h-[300px] sm:h-[350px] md:h-[400px] lg:h-[420px]"
             />

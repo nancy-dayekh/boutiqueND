@@ -18,6 +18,7 @@ export default function Checkout() {
   const [errorMsg, setErrorMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false); // to track if user is logged in and form should be readonly
+  const fallbackImage = "/default-product.png";
 
   // Load cart from localStorage
   useEffect(() => {
@@ -372,7 +373,7 @@ export default function Checkout() {
               >
                 <div className="w-16 h-16 relative">
                   <Image
-                    src={item.image || "/placeholder.png"} // fallback image
+                    src={item.image ? item.image : fallbackImage}
                     alt={item.name}
                     fill
                     className="object-cover rounded"
