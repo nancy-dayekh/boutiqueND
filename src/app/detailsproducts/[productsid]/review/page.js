@@ -14,6 +14,7 @@ export default function Review() {
   const [image, setImage] = useState(null);
   const [showDialog, setShowDialog] = useState(false);
   const [loading, setLoading] = useState(true);
+  const fallbackImage = "/default-product.png";
 
   useEffect(() => {
     if (!productId) return;
@@ -31,12 +32,15 @@ export default function Review() {
         setReviews(data.reviews || []);
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => {
+        setLoading(false);
+      });
   }, [productId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // If nothing entered and no rating and no image, just return silently (nothing to submit)
     if (!newReview.trim() && rating === 0 && !image) return;
 
     const token = localStorage.getItem("auth_token");
@@ -47,8 +51,15 @@ export default function Review() {
 
     const formData = new FormData();
     formData.append("product_id", productId);
+
+    // Append comment only if not empty, else append empty string (optional)
     formData.append("comment", newReview.trim());
-    if (rating > 0) formData.append("rating", rating);
+
+    // Append rating only if > 0, else append null or skip (depending on backend)
+    if (rating > 0) {
+      formData.append("rating", rating);
+    }
+
     if (image) formData.append("image", image);
 
     try {
@@ -56,7 +67,10 @@ export default function Review() {
         `https://devflowlb.com/api/customer/products/${productId}/reviews`,
         {
           method: "POST",
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
           body: formData,
         }
       );
@@ -67,10 +81,10 @@ export default function Review() {
         setNewReview("");
         setRating(0);
         setImage(null);
-
         const fileInput = document.querySelector('input[type="file"]');
         if (fileInput) fileInput.value = null;
       }
+      // No alerts or errors if submission fails
     } catch {
       // Fail silently
     }
@@ -169,14 +183,11 @@ export default function Review() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <div className="relative w-full h-64 mt-3 rounded-lg overflow-hidden">
-                    <Image
-                      src={review.image}
-                      alt="Review Image"
-                      fill
-                      style={{ objectFit: "cover" }}
-                    />
-                  </div>
+                  <Image
+                    src={review.image ? review.image : fallbackImage}
+                    alt="Review Image"
+                    className="mt-3 w-full max-w-md rounded-lg object-cover cursor-pointer transition hover:opacity-90"
+                  />
                 </a>
               )}
 
