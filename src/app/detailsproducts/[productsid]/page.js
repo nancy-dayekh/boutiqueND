@@ -452,7 +452,9 @@ export default function DetailsProducts() {
                         <Image
                           src={review.image ? review.image : fallbackImage}
                           alt="Review Image"
-                          className="mt-3 w-full max-w-md rounded-lg object-cover cursor-pointer transition hover:opacity-90"
+                          width={80} // small width
+                          height={80} // small height
+                          className="mt-2 rounded-md object-cover cursor-pointer transition hover:opacity-90"
                         />
                       </a>
                     )}
