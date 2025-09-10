@@ -279,10 +279,10 @@ export default function DetailsProducts() {
                     <div className="flex items-start gap-4">
                       {/* Image */}
                       {review.image && (
-                        <img
-                          src={review.image}
-                          alt="Review"
-                          className="w-28 h-28 object-cover rounded-lg border"
+                        <Image
+                          src={review.image ? review.image : fallbackImage}
+                          alt="Review Image"
+                          className="mt-3 w-full max-w-md rounded-lg object-cover cursor-pointer transition hover:opacity-90"
                         />
                       )}
 
@@ -445,10 +445,10 @@ export default function DetailsProducts() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <img
-                          src={review.image}
-                          alt="review"
-                          className="w-full h-48 object-cover rounded-md mb-2"
+                        <Image
+                          src={review.image ? review.image : fallbackImage}
+                          alt="Review Image"
+                          className="mt-3 w-full max-w-md rounded-lg object-cover cursor-pointer transition hover:opacity-90"
                         />
                       </a>
                     )}
