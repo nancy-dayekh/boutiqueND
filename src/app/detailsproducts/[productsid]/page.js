@@ -88,10 +88,12 @@ export default function DetailsProducts() {
       }
     }
 
-    fetch(`https://devflowlb.com/api/products/${id}/reviews?limit=3`)
-      .then((res) => res.json())
-      .then((data) => setReviews(data.reviews || []));
-  }, [id]);
+  fetch(`https://devflowlb.com/api/products/${id}/reviews`)
+    .then((res) => res.json())
+    .then((data) => {
+      const latestThree = (data.reviews || []).slice(0, 3);
+      setReviews(latestThree);
+    });
 
   const handlePrevImage = () => {
     setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
