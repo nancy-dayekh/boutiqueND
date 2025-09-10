@@ -443,20 +443,17 @@ export default function DetailsProducts() {
                     className="rounded-xl border border-gray-200 p-4 bg-white shadow-sm"
                   >
                     {/* Review Image (if exists) */}
+
                     {review.image && (
-                      <a
-                        href={review.image}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                      <div className="w-20 h-20 flex-shrink-0">
                         <Image
                           src={review.image ? review.image : fallbackImage}
                           alt="Review Image"
-                          width={80} // small width
-                          height={80} // small height
-                          className="mt-2 rounded-md object-cover cursor-pointer transition hover:opacity-90"
+                          width={80}
+                          height={80}
+                          className="rounded-md object-cover cursor-pointer transition hover:opacity-90"
                         />
-                      </a>
+                      </div>
                     )}
 
                     {/* Review Name */}
