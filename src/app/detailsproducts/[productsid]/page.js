@@ -88,12 +88,14 @@ export default function DetailsProducts() {
       }
     }
 
-  fetch(`https://devflowlb.com/api/products/${id}/reviews`)
+ fetch(`https://devflowlb.com/api/products/${id}/reviews`)
     .then((res) => res.json())
     .then((data) => {
+      // Display only the latest 3 reviews
       const latestThree = (data.reviews || []).slice(0, 3);
       setReviews(latestThree);
     });
+}, [id]);
 
   const handlePrevImage = () => {
     setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
