@@ -213,8 +213,14 @@ export default function DetailsProducts() {
         <div className="md:w-[50%] w-full">
           <div className="relative w-full sm:w-[520px]">
             <Image
-            src={product.image ? product.image : fallbackImage}
-              alt={product.name}
+              src={
+                images[currentImageIndex]?.image_path
+                  ? images[currentImageIndex].image_path
+                  : fallbackImage
+              }
+              alt={product.name || "product image"}
+              width={600}
+              height={400}
               className="rounded-md object-cover w-full h-[300px] sm:h-[350px] md:h-[400px] lg:h-[420px]"
             />
 
@@ -237,11 +243,13 @@ export default function DetailsProducts() {
 
           <div className="flex gap-2 mt-4 overflow-x-auto">
             {images.map((img, idx) => (
-              // eslint-disable-next-line jsx-a11y/alt-text
-              <img
+              <Image
                 key={idx}
+                src={img.image_path || fallbackImage}
+                alt={`thumb-${idx}`}
+                width={80}
+                height={80}
                 onClick={() => setCurrentImageIndex(idx)}
-                src={imageURL(img.image_path || img.image)}
                 className={`h-16 w-16 object-cover rounded-md cursor-pointer ${
                   idx === currentImageIndex
                     ? "ring-2 ring-black"
