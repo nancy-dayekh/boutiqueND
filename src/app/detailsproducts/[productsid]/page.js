@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { FaChevronLeft, FaChevronRight, FaHeart } from "react-icons/fa";
 import AllProduct from "../../products/product/product";
+import Image from "next/image";
 
 export default function DetailsProducts() {
   const params = useParams();
@@ -21,8 +22,8 @@ export default function DetailsProducts() {
   const [selectedSize, setSelectedSize] = useState("");
   const [products, setProducts] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const fallbackImage = "/default-product.png";
 
-  const imageURL = (imgPath) => `https://devflowlb.com/storage/${imgPath}`;
   const [token, setToken] = useState(null);
 
   useEffect(() => {
@@ -87,9 +88,13 @@ export default function DetailsProducts() {
       }
     }
 
-    fetch(`https://devflowlb.com/api/products/${id}/reviews?limit=3`)
+    fetch(`https://devflowlb.com/api/products/${id}/reviews`)
       .then((res) => res.json())
-      .then((data) => setReviews(data.reviews || []));
+      .then((data) => {
+        // Display only the latest 3 reviews
+        const latestThree = (data.reviews || []).slice(0, 3);
+        setReviews(latestThree);
+      });
   }, [id]);
 
   const handlePrevImage = () => {
@@ -211,12 +216,15 @@ export default function DetailsProducts() {
         {/* Left Column */}
         <div className="md:w-[50%] w-full">
           <div className="relative w-full sm:w-[520px]">
-            <img
-              src={imageURL(
-                images[currentImageIndex]?.image_path ||
-                  images[currentImageIndex]?.image
-              )}
-              alt={product.name}
+            <Image
+              src={
+                images[currentImageIndex]?.image_path
+                  ? images[currentImageIndex].image_path
+                  : fallbackImage
+              }
+              alt={product.name || "product image"}
+              width={600}
+              height={400}
               className="rounded-md object-cover w-full h-[300px] sm:h-[350px] md:h-[400px] lg:h-[420px]"
             />
 
@@ -239,11 +247,13 @@ export default function DetailsProducts() {
 
           <div className="flex gap-2 mt-4 overflow-x-auto">
             {images.map((img, idx) => (
-              // eslint-disable-next-line jsx-a11y/alt-text
-              <img
+              <Image
                 key={idx}
+                src={img.image_path || fallbackImage}
+                alt={`thumb-${idx}`}
+                width={80}
+                height={80}
                 onClick={() => setCurrentImageIndex(idx)}
-                src={imageURL(img.image_path || img.image)}
                 className={`h-16 w-16 object-cover rounded-md cursor-pointer ${
                   idx === currentImageIndex
                     ? "ring-2 ring-black"
@@ -273,10 +283,10 @@ export default function DetailsProducts() {
                     <div className="flex items-start gap-4">
                       {/* Image */}
                       {review.image && (
-                        <img
-                          src={review.image}
-                          alt="Review"
-                          className="w-28 h-28 object-cover rounded-lg border"
+                        <Image
+                          src={review.image ? review.image : fallbackImage}
+                          alt="Review Image"
+                          className="mt-3 w-full max-w-md rounded-lg object-cover cursor-pointer transition hover:opacity-90"
                         />
                       )}
 
@@ -433,18 +443,17 @@ export default function DetailsProducts() {
                     className="rounded-xl border border-gray-200 p-4 bg-white shadow-sm"
                   >
                     {/* Review Image (if exists) */}
+
                     {review.image && (
-                      <a
-                        href={review.image}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <img
-                          src={review.image}
-                          alt="review"
-                          className="w-full h-48 object-cover rounded-md mb-2"
+                      <div className="w-20 h-20 flex-shrink-0">
+                        <Image
+                          src={review.image ? review.image : fallbackImage}
+                          alt="Review Image"
+                          width={80}
+                          height={80}
+                          className="rounded-md object-cover cursor-pointer transition hover:opacity-90"
                         />
-                      </a>
+                      </div>
                     )}
 
                     {/* Review Name */}
