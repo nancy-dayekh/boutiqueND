@@ -7,17 +7,17 @@ import Image from "next/image";
 const socialLinks = [
   {
     Icon: FaInstagram,
-    url: "https://instagram.com/nancy_m_dayekh", // ✅ محدث بالرابط الصحيح
+    url: "https://instagram.com/boutiqueND", // ✅ محدث بالرابط الصحيح
     title: "Instagram",
   },
   {
     Icon: FaWhatsapp,
-    url: "https://wa.me/96171407764",
+    url: "https://wa.me/96176715788",
     title: "WhatsApp",
   },
   {
     Icon: FaEnvelope,
-    url: "mailto:support@brandnd.com",
+    url: "mailto:boutiquend@devflowlb.com",
     title: "Email",
   },
 ];
@@ -115,7 +115,6 @@ export default function Footer() {
             Connect With Us
           </h3>
           <p className="text-gray-400 mb-4 leading-relaxed">
-            support@brandnd.com
             <br />
             +961 76 715 788
           </p>
