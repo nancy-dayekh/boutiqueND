@@ -69,7 +69,7 @@ export default function NewCollection() {
   };
 
   const handleProductClick = (id) => {
-    router.push(`/products/${id}`);
+    router.push(`/detailsproducts/${id}`);
   };
 
   if (loading) {
