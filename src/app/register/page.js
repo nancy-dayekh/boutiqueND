@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FcGoogle } from "react-icons/fc";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 export default function Register() {
@@ -83,10 +82,6 @@ export default function Register() {
       setServerError("Network error. Please try again later.");
     }
     setSubmitting(false);
-  };
-
-  const handleGoogleLogin = () => {
-    window.location.href = "https://devflowlb.com/auth/google";
   };
 
   return (
@@ -209,16 +204,6 @@ export default function Register() {
             </div>
           </div>
         </div>
-
-        {/* Google Auth */}
-        <button
-          type="button"
-          onClick={handleGoogleLogin}
-          className="w-full border border-black text-black flex items-center justify-center gap-2 py-3 text-sm uppercase hover:bg-gray-100"
-        >
-          <FcGoogle className="w-5 h-5" />
-          Sign up with Google
-        </button>
 
         {/* Submit */}
         <button
