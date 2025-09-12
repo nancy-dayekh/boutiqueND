@@ -51,10 +51,12 @@ export default function DetailsProducts() {
     fetch(`https://devflowlb.com/api/multiImageProducts/${id}`)
       .then((res) => res.json())
       .then((data) => {
-        if (Array.isArray(data)) setMultImages(data);
-        else if (data?.data) setMultImages(data.data);
-        else if (data?.image) setMultImages([data]);
-        else setMultImages([]);
+        if (Array.isArray(data.images)) {
+          // ✅ حفظ الصور باستخدام نفس المفتاح (image)
+          setMultImages(data.images.map((img) => ({ image_path: img.image })));
+        } else {
+          setMultImages([]);
+        }
         setCurrentImageIndex(0);
       });
 
@@ -249,8 +251,7 @@ export default function DetailsProducts() {
             {images.map((img, idx) => (
               <Image
                 key={idx}
-                src={img.image_path  ? img.image_path : fallbackImage}
-                
+                src={img.image_path ? img.image_path : fallbackImage}
                 alt={`thumb-${idx}`}
                 width={80}
                 height={80}
