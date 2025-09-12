@@ -249,7 +249,8 @@ export default function DetailsProducts() {
             {images.map((img, idx) => (
               <Image
                 key={idx}
-                src={img.image_path || fallbackImage}
+                src={img.image_path  ? img.image_path : fallbackImage}
+                
                 alt={`thumb-${idx}`}
                 width={80}
                 height={80}
