@@ -145,6 +145,16 @@ export default function DetailsProducts() {
       return;
     }
 
+    if (numericStock <= 0) {
+      alert("Sorry, this product is out of stock.");
+      return;
+    }
+
+    if (quantity > numericStock) {
+      alert(`Only ${numericStock} items available in stock.`);
+      return;
+    }
+
     const updatedCart = [...cart];
     const existingIndex = updatedCart.findIndex(
       (item) => item.id === product.id && item.size === selectedSize
