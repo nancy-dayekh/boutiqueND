@@ -22,7 +22,6 @@ export default function Homepage() {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    // Auto-slide every 5 seconds
     timeoutRef.current = setTimeout(() => {
       setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
     }, 5000);
@@ -50,10 +49,10 @@ export default function Homepage() {
   }, []);
 
   return (
-    <>
+    <div className="overflow-x-hidden">
       {/* Slider */}
-      <div className="relative w-full mt-[20px] sm:mt-[40px] h-[300px] sm:h-[400px] overflow-hidden group">
-        <div className="mt-5 md:mt-3">
+      <div className="relative w-full mt-3 h-[300px] sm:h-[400px] overflow-hidden group">
+        <div className="mt-0">
           <div
             className="flex gap-[20px] transition-transform duration-700 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -86,7 +85,7 @@ export default function Homepage() {
           </div>
         </div>
 
-        {/* Arrows (same design always) */}
+        {/* Arrows */}
         <button
           onClick={prevSlide}
           aria-label="Previous slide"
@@ -130,45 +129,42 @@ export default function Homepage() {
         </div>
       </div>
 
-      {/* Category Section */}
-      <div className="mt-10">
+      {/* Sections - Mobile mt-5 */}
+      <div className="mt-5">
         <DesignCategory />
       </div>
 
-      {/* New Collection Section */}
-      <div className="mt-10">
+      <div className="mt-5">
         <NewCollection />
       </div>
 
-      <div className="mt-10 mb-28">
+      <div className="mt-5 mb-28">
         <ShopDresses />
       </div>
 
-      {/* Handpicked Favorites Header */}
-      <div className="w-full flex flex-col mb-10 px-4 sm:px-0 md:ml-20">
-        <div className="flex w-full max-w-6xl gap-4 sm:gap-8">
-          <h1 className="text-base sm:text-xl font-medium tracking-widest uppercase text-black whitespace-nowrap">
+      <div className="w-full flex flex-col mb-5 px-4">
+        <div className="flex w-full max-w-6xl gap-4">
+          <h1 className="text-base font-medium tracking-widest uppercase text-black">
             Handpicked Favorites
           </h1>
         </div>
       </div>
 
-      {/* Products Section */}
-      <div className="flex justify-center items-center mb-28">
+      <div className="flex flex-wrap justify-center items-center gap-4 mb-28 max-w-6xl mx-auto">
         <Products products={products.slice(0, 8)} />
       </div>
 
-      <div className="mt-28 mb-28">
+      <div className="mt-5 mb-28">
         <ShopBlazer />
       </div>
 
-      <div className="mt-28 mb-28">
+      <div className="mt-5 mb-28">
         <DesignJeans />
       </div>
 
-      <div className="mt-28 mb-28">
+      <div className="mt-5 mb-28">
         <About />
       </div>
-    </>
+    </div>
   );
 }
