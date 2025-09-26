@@ -13,23 +13,8 @@ import Image from "next/image";
 const slides = [
   { type: "video", src: "/video/contactuss.mp4" },
   { type: "image", src: "/image/homeslider2.jpg" },
-  { type: "video", src: "/video/homeslider3.mp4 " },
+  { type: "video", src: "/video/homeslider3.mp4" },
 ];
-
-// Scroll animation using Tailwind utility classes
-const handleScrollAnimation = () => {
-  const elements = document.querySelectorAll(".animate-scroll");
-  elements.forEach((el) => {
-    const rect = el.getBoundingClientRect();
-    if (rect.top <= window.innerHeight * 0.85) {
-      el.classList.add("opacity-100", "translate-y-0");
-      el.classList.remove("opacity-0", "translate-y-5");
-    } else {
-      el.classList.remove("opacity-100", "translate-y-0");
-      el.classList.add("opacity-0", "translate-y-5");
-    }
-  });
-};
 
 export default function Homepage() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -37,27 +22,11 @@ export default function Homepage() {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    // Set up scroll event listener for animations
-    window.addEventListener("scroll", handleScrollAnimation);
-    // Trigger animation on mount (in case some elements are already visible)
-    handleScrollAnimation();
-
-    // Cleanup on unmount
-    return () => {
-      window.removeEventListener("scroll", handleScrollAnimation);
-    };
-  }, []);
-  useEffect(() => {
-    if (!sessionStorage.getItem("hasRefreshed")) {
-      sessionStorage.setItem("hasRefreshed", "true");
-      window.location.reload();
-    }
-  }, []);
-
-  useEffect(() => {
+    // Auto-slide every 5 seconds
     timeoutRef.current = setTimeout(() => {
       setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
     }, 5000);
+
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
@@ -82,19 +51,8 @@ export default function Homepage() {
 
   return (
     <>
-      {/* --- Slider Section --- */}
-      <div
-        className="
-    relative 
-    w-full 
-    mt-[20px] sm:mt-[40px]   /* ✅ margin top space */
-    h-[300px]                /* smaller height for mobile */
-    sm:h-[400px]             /* bigger for desktop */
-    overflow-hidden 
-    group
-  "
-      >
-        {/* ✅ Keep space left/right on all screens */}
+      {/* Slider */}
+      <div className="relative w-full mt-[20px] sm:mt-[40px] h-[300px] sm:h-[400px] overflow-hidden group">
         <div className="mt-5 md:mt-3">
           <div
             className="flex gap-[20px] transition-transform duration-700 ease-in-out"
@@ -128,17 +86,16 @@ export default function Homepage() {
           </div>
         </div>
 
-        {/* Arrows (rectangle style same as desktop) */}
+        {/* Arrows (same design always) */}
         <button
           onClick={prevSlide}
           aria-label="Previous slide"
           className="absolute top-1/2 left-2 sm:left-[40px] -translate-y-1/2 
-               w-[50px] h-[35px] sm:w-[60px] sm:h-[38px] 
-               bg-white bg-opacity-90 rounded-[10px] shadow-lg 
-               flex items-center justify-center 
-               opacity-100 sm:opacity-0 sm:group-hover:opacity-100 
-               transition-opacity duration-300 z-10 
-               hover:bg-gray-100 hover:shadow-xl cursor-pointer transform hover:scale-105"
+                     w-[50px] h-[35px] sm:w-[60px] sm:h-[38px] 
+                     bg-white bg-opacity-90 rounded-[10px] shadow-lg 
+                     flex items-center justify-center 
+                     transition-opacity duration-300 z-10 
+                     hover:bg-gray-100 hover:shadow-xl cursor-pointer transform hover:scale-105"
         >
           <div className="w-0 h-0 border-y-[7px] border-y-transparent border-r-[10px] border-r-black ml-[6px]" />
         </button>
@@ -147,12 +104,11 @@ export default function Homepage() {
           onClick={nextSlide}
           aria-label="Next slide"
           className="absolute top-1/2 right-2 sm:right-[40px] -translate-y-1/2 
-               w-[50px] h-[35px] sm:w-[60px] sm:h-[38px] 
-               bg-white bg-opacity-90 rounded-[10px] shadow-lg 
-               flex items-center justify-center 
-               opacity-100 sm:opacity-0 sm:group-hover:opacity-100 
-               transition-opacity duration-300 z-10 
-               hover:bg-gray-100 hover:shadow-xl cursor-pointer transform hover:scale-105"
+                     w-[50px] h-[35px] sm:w-[60px] sm:h-[38px] 
+                     bg-white bg-opacity-90 rounded-[10px] shadow-lg 
+                     flex items-center justify-center 
+                     transition-opacity duration-300 z-10 
+                     hover:bg-gray-100 hover:shadow-xl cursor-pointer transform hover:scale-105"
         >
           <div className="w-0 h-0 border-y-[7px] border-y-transparent border-l-[10px] border-l-black mr-[6px]" />
         </button>
@@ -175,21 +131,21 @@ export default function Homepage() {
       </div>
 
       {/* Category Section */}
-      <div className="mt-10 animate-scroll opacity-0 translate-y-5 transition-all duration-700 ease-out will-change-transform">
+      <div className="mt-10">
         <DesignCategory />
       </div>
 
       {/* New Collection Section */}
-      <div className="mt-10 animate-scroll opacity-0 translate-y-5 transition-all duration-700 ease-out will-change-transform">
+      <div className="mt-10">
         <NewCollection />
       </div>
 
-      <div className="mt-10 mb-28 animate-scroll opacity-0 translate-y-5 transition-all duration-700 ease-out will-change-transform">
+      <div className="mt-10 mb-28">
         <ShopDresses />
       </div>
 
-      {/* Header Line + View More */}
-      <div className="w-full flex flex-col mb-10 px-4 sm:px-0 md:ml-20 animate-scroll opacity-0 translate-y-5 transition-all duration-700 ease-out will-change-transform">
+      {/* Handpicked Favorites Header */}
+      <div className="w-full flex flex-col mb-10 px-4 sm:px-0 md:ml-20">
         <div className="flex w-full max-w-6xl gap-4 sm:gap-8">
           <h1 className="text-base sm:text-xl font-medium tracking-widest uppercase text-black whitespace-nowrap">
             Handpicked Favorites
@@ -198,18 +154,19 @@ export default function Homepage() {
       </div>
 
       {/* Products Section */}
-      <div className="flex justify-center items-center mb-28 animate-scroll opacity-0 translate-y-5 transition-all duration-700 ease-out will-change-transform">
+      <div className="flex justify-center items-center mb-28">
         <Products products={products.slice(0, 8)} />
       </div>
 
-      <div className="mt-28 mb-28 animate-scroll opacity-0 translate-y-5 transition-all duration-700 ease-out will-change-transform">
+      <div className="mt-28 mb-28">
         <ShopBlazer />
       </div>
 
-      <div className="mt-28 mb-28 animate-scroll opacity-0 translate-y-5 transition-all duration-700 ease-out will-change-transform">
+      <div className="mt-28 mb-28">
         <DesignJeans />
       </div>
-      <div className="mt-28 mb-28 animate-scroll opacity-0 translate-y-5 transition-all duration-700 ease-out will-change-transform">
+
+      <div className="mt-28 mb-28">
         <About />
       </div>
     </>
